@@ -592,6 +592,20 @@
             margin-top: 4px;
         }
 
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
         .footer-copy {
             font-size: 12px;
             color: var(--text-muted);
@@ -834,7 +848,10 @@
             <div class="footer-logo">DARK <em>HORSE</em></div>
             <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
         </div>
-        <div class="footer-copy">&copy; 2026 Dark Horse. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+        </div>
     </footer>
 
 </body>

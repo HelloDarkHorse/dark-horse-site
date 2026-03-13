@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions — Dark Horse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0B1120;
+            --navy-light: #0F1829;
+            --navy-card: #111D35;
+            --coral: #E05C6F;
+            --white: #FFFFFF;
+            --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo em { font-style: normal; color: var(--coral); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta {
+            background: var(--coral) !important;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            transition: opacity 0.2s !important;
+        }
+
+        .nav-cta:hover { opacity: 0.85; }
+
+        /* CONTENT */
+        .legal-page {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 140px 60px 100px;
+        }
+
+        .legal-meta {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .legal-page h1 {
+            font-size: clamp(30px, 4vw, 46px);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .legal-dates {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 56px;
+        }
+
+        .legal-body {
+            background: var(--navy-light);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 48px 52px;
+        }
+
+        .legal-body p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.85;
+            margin-bottom: 20px;
+        }
+
+        .legal-body h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
+            margin: 36px 0 12px;
+        }
+
+        .legal-body h2:first-child { margin-top: 0; }
+
+        .legal-section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 40px 0;
+        }
+
+        .legal-body ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .legal-body ul li {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.85;
+            padding-left: 18px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .legal-body ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--coral);
+            font-size: 12px;
+        }
+
+        .legal-body a {
+            color: var(--coral);
+            text-decoration: none;
+        }
+
+        .legal-body a:hover { text-decoration: underline; }
+
+        /* FOOTER */
+        footer {
+            padding: 36px 60px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .footer-logo em { font-style: normal; color: var(--coral); }
+
+        .footer-tagline {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .legal-page { padding: 120px 24px 70px; }
+            .legal-body { padding: 32px 24px; }
+            footer {
+                padding: 30px 24px;
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li><a href="services.html">Services & Rates</a></li>
+            <li><a href="index.html#process">Process</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="nav-cta">Work With Me</a></li>
+        </ul>
+    </nav>
+
+    <div class="legal-page">
+        <span class="legal-meta">Legal</span>
+        <h1>Terms & Conditions</h1>
+        <p class="legal-dates">Dark Horse SMS Program &amp; Website Terms of Use</p>
+
+        <div class="legal-body">
+
+            <h2>SMS Program Terms</h2>
+            <p>Our SMS program delivers updates, appointment reminders, promotions, and service-related information. By opting in, users can expect occasional text messages related to our business offerings and services.</p>
+            <p>You can cancel the SMS service at any time by texting <strong style="color:#fff">STOP</strong> to the shortcode. Upon sending "STOP," we will confirm your unsubscribe status via SMS. To rejoin, sign up as you did initially and we will resume sending SMS messages to you.</p>
+            <p>If you experience issues with the messaging program, reply with the keyword <strong style="color:#fff">HELP</strong> for more assistance, or reach out directly to <a href="mailto:kat@darkhorseva.net">kat@darkhorseva.net</a>.</p>
+            <p>Carriers are not liable for delayed or undelivered messages. Message and data rates may apply. Message frequency varies. For questions about your text plan or data plan, contact your wireless provider.</p>
+            <p>For privacy-related inquiries, please refer to our <a href="privacy-policy.html">Privacy Policy</a>. Our messaging program complies with industry standards, including the CTIA and TCPA. By opting into our SMS program, you acknowledge and agree to comply with all applicable local, state, and federal laws.</p>
+
+            <hr class="legal-section-divider">
+
+            <h2>Website Terms of Use</h2>
+            <p>Welcome to Dark Horse ("Company," "we," "our," or "us"). These Terms of Use ("Terms") govern your use of our website, including its subdomains, affiliated websites, mobile versions, and services available therefrom (the "Site"). By accessing or using the Site, you agree to be bound by these Terms and our <a href="privacy-policy.html">Privacy Policy</a>. If you do not agree to these Terms, you should not access or use the Site.</p>
+
+            <h2>1. Changes to Terms or Site</h2>
+            <p>Dark Horse reserves the right to modify, suspend, or discontinue the Site (in whole or in part) at its sole discretion, with or without notice. We may also update these Terms at any time. Your continued use of the Site after modifications are posted constitutes your agreement to the revised Terms.</p>
+
+            <h2>2. Eligibility</h2>
+            <p>By using the Site, you affirm that you are at least 18 years old or that your parent or legal guardian has reviewed and agreed to these Terms on your behalf. You may not use the Site if you are under the age of 13.</p>
+
+            <h2>3. License to Use the Site</h2>
+            <p>Dark Horse grants you a limited, non-transferable, non-exclusive, revocable license to access and use the Site for personal or business-related purposes. You may not copy, modify, distribute, sell, or lease any part of the Site or its content without our prior written consent.</p>
+
+            <h2>4. Prohibited Conduct</h2>
+            <p>You agree not to:</p>
+            <ul>
+                <li>Post or share false, misleading, or infringing content</li>
+                <li>Violate any applicable laws, regulations, or intellectual property rights</li>
+                <li>Introduce viruses, malware, or any other malicious code to the Site</li>
+                <li>Use automated means (e.g., bots, scrapers) to access the Site</li>
+                <li>Interfere with or disrupt the functionality of the Site</li>
+            </ul>
+
+            <h2>5. Third-Party Links</h2>
+            <p>The Site may contain links to third-party websites. We do not endorse or assume responsibility for any third-party content, privacy policies, or practices.</p>
+
+            <h2>6. Intellectual Property</h2>
+            <p>All content on the Site, including but not limited to text, graphics, logos, and software, is the property of Dark Horse or its licensors and is protected under copyright, trademark, and other intellectual property laws.</p>
+
+            <h2>7. Disclaimer of Warranties</h2>
+            <p>The Site is provided on an "as is" and "as available" basis without warranties of any kind. We do not guarantee that the Site will be error-free, uninterrupted, or secure.</p>
+
+            <h2>8. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by Missouri law, Dark Horse shall not be liable for any indirect, incidental, or consequential damages resulting from your use of the Site. Our total liability for any claims related to your use of the Site shall not exceed $100 USD.</p>
+
+            <h2>9. Indemnification</h2>
+            <p>You agree to defend, indemnify, and hold harmless Dark Horse, its employees, affiliates, and agents from any claims, damages, or expenses arising from your violation of these Terms or misuse of the Site.</p>
+
+            <h2>10. Privacy Policy</h2>
+            <p>Our <a href="privacy-policy.html">Privacy Policy</a> explains how we collect, use, and protect your personal information.</p>
+
+            <h2>11. Governing Law & Jurisdiction</h2>
+            <p>These Terms are governed by the laws of the State of Missouri. Any disputes shall be resolved in the courts of Missouri, and you consent to the jurisdiction and venue of such courts.</p>
+
+            <h2>12. Contact Information</h2>
+            <p>If you have any questions regarding these Terms, please contact us at <a href="mailto:kat@darkhorseva.net">kat@darkhorseva.net</a>.</p>
+
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <a href="index.html" class="footer-logo">DARK <em>HORSE</em></a>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+        </div>
+    </footer>
+
+</body>
+</html>
