@@ -165,12 +165,20 @@
         }
 
         .hero h1 {
-            font-size: clamp(40px, 5.5vw, 76px);
+            font-size: clamp(28px, 3.8vw, 56px);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.15;
             margin-bottom: 24px;
             max-width: 920px;
             letter-spacing: -1px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                white-space: normal;
+                font-size: clamp(28px, 7vw, 42px);
+            }
         }
 
         .hero h1 .accent {
