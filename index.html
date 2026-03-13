@@ -474,6 +474,28 @@
             font-size: 13px;
         }
 
+        /* ── CONTACT FORM ── */
+        .contact-section {
+            background: var(--navy);
+        }
+
+        .contact-inner {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .contact-form-wrap {
+            background: var(--navy-light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            min-height: 1300px;
+        }
+
+        .contact-form-wrap iframe {
+            display: block;
+        }
+
         /* ── FOOTER ── */
         footer {
             padding: 36px 60px;
@@ -562,6 +584,7 @@
         <ul class="nav-links">
             <li><a href="services.html">Services & Rates</a></li>
             <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
             <li><a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="nav-cta">Work With Me</a></li>
         </ul>
     </nav>
@@ -651,7 +674,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="cta-section" id="contact">
+    <section class="cta-section" id="cta">
         <div class="cta-box">
             <h2>Ready to Stop Losing Deals?</h2>
             <p>Partner with someone who can deliver on your promises. Let's talk about your next project.</p>
@@ -661,6 +684,37 @@
                 <div class="perk"><span class="perk-check">✦</span> Fixed pricing per project</div>
                 <div class="perk"><span class="perk-check">✦</span> White-label delivery</div>
                 <div class="perk"><span class="perk-check">✦</span> Clear timelines on every build</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="contact-section" id="contact">
+        <div class="section-header">
+            <span class="section-label">Get in Touch</span>
+            <h2>Start a <span class="accent">Conversation</span></h2>
+            <p>Fill out the form and I'll get back to you within one business day to talk through your project.</p>
+        </div>
+        <div class="contact-inner">
+            <div class="contact-form-wrap">
+                <iframe
+                    src="https://api.darkhorseva.net/widget/form/CmNhKeH127nthMLD4Lw2"
+                    style="width:100%;height:1288px;border:none;"
+                    id="inline-CmNhKeH127nthMLD4Lw2"
+                    data-layout="{'id':'INLINE'}"
+                    data-trigger-type="alwaysShow"
+                    data-trigger-value=""
+                    data-activation-type="alwaysActivated"
+                    data-activation-value=""
+                    data-deactivation-type="neverDeactivate"
+                    data-deactivation-value=""
+                    data-form-name="Form For Home Page"
+                    data-height="1288"
+                    data-layout-iframe-id="inline-CmNhKeH127nthMLD4Lw2"
+                    data-form-id="CmNhKeH127nthMLD4Lw2"
+                    title="Form For Home Page"
+                ></iframe>
+                <script src="https://api.darkhorseva.net/js/form_embed.js"></script>
             </div>
         </div>
     </section>
