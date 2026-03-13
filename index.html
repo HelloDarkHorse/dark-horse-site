@@ -19,8 +19,8 @@
             --navy-light: #0F1829;
             --navy-card: #111D35;
             --coral: #E05C6F;
-            --gold: #E8C547;
-            --gold-light: #F0D060;
+            --gold: #FFFFFF;
+            --gold-light: rgba(255,255,255,0.7);
             --white: #FFFFFF;
             --text-muted: #8A9BB5;
             --border: rgba(255, 255, 255, 0.07);
@@ -132,7 +132,7 @@
             right: -100px;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(201, 168, 76, 0.04) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 65%);
             pointer-events: none;
         }
 
@@ -145,7 +145,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            border: 1px solid rgba(201, 168, 76, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: var(--gold);
             font-size: 11px;
             font-weight: 600;
@@ -250,7 +250,7 @@
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--coral);
             margin-bottom: 16px;
             display: block;
         }
@@ -301,7 +301,7 @@
         }
 
         .feature-card:hover {
-            border-color: rgba(201, 168, 76, 0.25);
+            border-color: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
         }
 
@@ -344,7 +344,7 @@
             left: calc(12.5% + 4px);
             right: calc(12.5% + 4px);
             height: 1px;
-            background: linear-gradient(to right, rgba(201, 168, 76, 0.6), rgba(201, 168, 76, 0.1));
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
         }
 
         .step {
@@ -356,14 +356,14 @@
             width: 46px;
             height: 46px;
             background: var(--navy-card);
-            border: 1.5px solid var(--gold);
+            border: 1.5px solid var(--coral);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 15px;
             font-weight: 700;
-            color: var(--gold);
+            color: var(--coral);
             margin: 0 auto 22px;
             position: relative;
             z-index: 1;
@@ -405,7 +405,7 @@
             right: -80px;
             width: 360px;
             height: 360px;
-            background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -462,7 +462,7 @@
         }
 
         .perk-check {
-            color: var(--gold);
+            color: var(--coral);
             font-size: 13px;
         }
 
