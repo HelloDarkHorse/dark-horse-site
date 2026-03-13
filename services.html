@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services & Rates — Dark Horse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0B1120;
+            --navy-light: #0F1829;
+            --navy-card: #111D35;
+            --coral: #E05C6F;
+            --gold: #C9A84C;
+            --gold-light: #D4B86A;
+            --white: #FFFFFF;
+            --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-links a.active { color: var(--white); }
+
+        .nav-cta {
+            background: var(--coral) !important;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            transition: opacity 0.2s !important;
+        }
+
+        .nav-cta:hover { opacity: 0.85; }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            padding: 160px 60px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(224, 92, 111, 0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .page-hero-inner { position: relative; z-index: 1; }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(36px, 5vw, 62px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .page-hero h1 .accent { color: var(--coral); }
+
+        .page-hero p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        /* ── SECTIONS ── */
+        section { padding: 80px 60px; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header h2 .accent { color: var(--coral); }
+
+        .section-header p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        /* ── SERVICES GRID ── */
+        .services-section { background: var(--navy-light); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1060px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--navy);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 32px 28px;
+            transition: border-color 0.25s, transform 0.2s;
+        }
+
+        .service-card:hover {
+            border-color: rgba(201, 168, 76, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .service-icon {
+            width: 36px;
+            height: 36px;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .service-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* ── RATES ── */
+        .rates-section { background: var(--navy); }
+
+        .rates-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .rates-note {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .rates-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .rates-table thead tr {
+            background: var(--navy-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rates-table th {
+            padding: 18px 24px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .rates-table tbody tr {
+            background: var(--navy-light);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .rates-table tbody tr:hover {
+            background: var(--navy-card);
+        }
+
+        .rates-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .rates-table td {
+            padding: 22px 24px;
+            font-size: 14px;
+            color: var(--white);
+            vertical-align: top;
+        }
+
+        .rates-table td:first-child {
+            font-weight: 700;
+        }
+
+        .rates-table td:nth-child(2) {
+            color: var(--gold);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .rates-table td:last-child {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .rates-footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 24px;
+        }
+
+        .rates-footer-note strong {
+            color: var(--white);
+        }
+
+        /* ── TEAM ── */
+        .team-section { background: var(--navy-light); }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--navy);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 36px 28px;
+            text-align: center;
+            transition: border-color 0.25s;
+        }
+
+        .team-card:hover {
+            border-color: rgba(201, 168, 76, 0.2);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--navy-card);
+            border: 2px solid rgba(201, 168, 76, 0.3);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .team-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .team-role {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .team-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* ── CTA ── */
+        .cta-section { background: var(--navy); }
+
+        .cta-box {
+            background: linear-gradient(135deg, #111D35 0%, #0D1628 100%);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 72px 60px;
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -80px;
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--coral);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s, transform 0.15s;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.88;
+            transform: translateY(-2px);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 36px 60px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .footer-logo em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .footer-tagline {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .rate-card {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding: 40px 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            section { padding: 60px 24px; }
+            .page-hero { padding: 130px 24px 60px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
+            footer {
+                padding: 30px 24px;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="index.html#process">Process</a></li>
+            <li><a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="nav-cta">Work With Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="page-hero-inner">
+            <span class="section-label">Services & Rates</span>
+            <h1>Everything Built <span class="accent">Inside GHL.</span></h1>
+            <p>From a single funnel to a full subaccount setup — if it lives inside GoHighLevel, we can build it.</p>
+        </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section class="services-section" id="services">
+        <div class="section-header">
+            <h2>What We <span class="accent">Build</span></h2>
+            <p>A full range of GHL implementation services, handled end-to-end under your brand.</p>
+        </div>
+        <div class="services-grid">
+
+            <div class="service-card">
+                <svg class="service-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
+                <h3>Funnel Builds</h3>
+                <p>Landing pages, opt-ins, thank-you pages, and lead capture flows — built, connected, and tested inside your GHL instance.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="service-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                </svg>
+                <h3>Automations & Workflows</h3>
+                <p>Trigger-based workflows, pipeline automations, appointment reminders, and follow-up sequences that run without you.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="service-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <h3>Email Sequences</h3>
+                <p>Nurture sequences, onboarding flows, re-engagement campaigns, and broadcast emails — written, built, and scheduled.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="service-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 8.25h3m-3 4.5h3M6.75 21h10.5" />
+                </svg>
+                <h3>A2P & SMS Compliance</h3>
+                <p>10DLC registration, brand and campaign vetting, and SMS compliance setup so your messages actually get delivered.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="service-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3" />
+                </svg>
+                <h3>Subaccount Setup</h3>
+                <p>Full GHL subaccount configuration for new clients — pipelines, calendars, integrations, users, and onboarding handled start to finish.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="service-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                </svg>
+                <h3>Ad Campaign Integration</h3>
+                <p>Facebook and Instagram campaign setup wired into your GHL funnels — lead forms, pixel tracking, and pipeline routing included.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RATES -->
+    <section class="rates-section" id="rates">
+        <div class="section-header">
+            <h2>Simple, Transparent <span class="accent">Pricing</span></h2>
+            <p>Project-based rates. You'll always know the cost before work begins.</p>
+        </div>
+        <div class="rates-inner">
+            <p class="rates-note">Every project starts with a scoped estimate — no surprises, no open-ended billing. Scope and timeline are agreed before anything is built.</p>
+            <table class="rates-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Rate</th>
+                        <th>What's Included</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Retainer</td>
+                        <td>$750–$1,500/mo</td>
+                        <td>Ongoing builds, maintenance, and support for one agency. Priority turnaround, no per-project quoting.</td>
+                    </tr>
+                    <tr>
+                        <td>Funnel Build</td>
+                        <td>$500–$1,500</td>
+                        <td>Landing page, email/SMS sequences, and pipeline setup — built and tested end-to-end.</td>
+                    </tr>
+                    <tr>
+                        <td>Automation Build</td>
+                        <td>$300–$800</td>
+                        <td>Email or SMS workflow, trigger logic, and pipeline routing. Scoped per complexity.</td>
+                    </tr>
+                    <tr>
+                        <td>Subaccount Setup</td>
+                        <td>$300–$600</td>
+                        <td>Full GHL subaccount configuration for a new agency client — calendars, pipelines, users, and integrations.</td>
+                    </tr>
+                    <tr>
+                        <td>Ad Campaign Setup</td>
+                        <td>$400–$800</td>
+                        <td>Facebook/Instagram campaign setup with GHL funnel integration, pixel tracking, and lead routing.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="rates-footer-note"><strong>Not sure what you need?</strong> Book a call and we'll scope it together.</p>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team-section" id="team">
+        <div class="section-header">
+            <span class="section-label">The Team</span>
+            <h2>You're Not Working With <span class="accent">One Person.</span></h2>
+            <p>Dark Horse is a small, focused team. Every project has the right person on it.</p>
+        </div>
+        <div class="team-grid">
+
+            <div class="team-card">
+                <div class="team-avatar">K</div>
+                <h3>Krys Allen</h3>
+                <span class="team-role">Founder & Lead Implementer</span>
+                <p>Based in Arnold, Missouri, Krys brings 16+ years of experience in marketing, web design, email strategy, and e-commerce. She leads every GHL build and keeps the work precise, polished, and on time.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">N</div>
+                <h3>Nancy</h3>
+                <span class="team-role">Client Experience & Project Coordination</span>
+                <p>Nancy keeps communication clear and projects moving. With a background in public management and client operations, she makes sure nothing gets missed and every handoff is smooth.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">A</div>
+                <h3>Alex</h3>
+                <span class="team-role">Social Media & Campaign Manager</span>
+                <p>With five years in social media, email marketing, and lead generation, Alex handles campaign setup and platform management so your clients get consistent, on-brand execution.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-box">
+            <h2>Ready to Get Started?</h2>
+            <p>Tell us what you're building and we'll take it from there.</p>
+            <a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="btn-primary">Schedule a Call &rarr;</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <a href="index.html" class="footer-logo">DARK <em>HORSE</em></a>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+        </div>
+        <div class="footer-copy">&copy; 2026 Dark Horse. All rights reserved.</div>
+    </footer>
+
+</body>
+</html>
