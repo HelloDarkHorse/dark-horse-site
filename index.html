@@ -330,6 +330,75 @@
             line-height: 1.75;
         }
 
+        /* ── TESTIMONIALS ── */
+        .testimonials {
+            background: var(--navy);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.25s, transform 0.2s;
+        }
+
+        .testimonial-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .video-wrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrap iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .testimonial-name {
+            padding: 16px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .testimonial-name::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--coral);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 640px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ── PROCESS ── */
         .process-inner {
             max-width: 960px;
@@ -637,6 +706,46 @@
                 <h3>Scale Without Hiring</h3>
                 <p>Take on more clients without expanding your team. Predictable delivery, predictable costs.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <span class="section-label">Don't Take My Word For It</span>
+            <h2>Hear It From <span class="accent">The Agencies</span></h2>
+            <p>Real results from real agency owners who needed a build partner they could count on.</p>
+        </div>
+        <div class="testimonials-grid">
+
+            <div class="testimonial-card">
+                <div class="video-wrap">
+                    <iframe src="https://www.youtube.com/embed/IAvIyBzawYM" title="Angie's testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="testimonial-name">Angie</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="video-wrap">
+                    <iframe src="https://www.youtube.com/embed/XuQMTjgtKgk" title="Lisa's testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="testimonial-name">Lisa</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="video-wrap">
+                    <iframe src="https://www.youtube.com/embed/DZXt44HUQ4U" title="Tina's testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="testimonial-name">Tina</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="video-wrap">
+                    <iframe src="https://www.youtube.com/embed/D9XdRdvVSf0" title="Eric's testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="testimonial-name">Eric</div>
+            </div>
+
         </div>
     </section>
 
