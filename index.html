@@ -19,8 +19,9 @@
             --navy-light: #0F1829;
             --navy-card: #111D35;
             --coral: #E05C6F;
-            --gold: #FFFFFF;
-            --gold-light: rgba(255,255,255,0.7);
+            --gold: #C9A84C;
+            --gold-rgb: 201, 168, 76;
+            --gold-light: rgba(201, 168, 76, 0.65);
             --white: #FFFFFF;
             --text-muted: #8A9BB5;
             --border: rgba(255, 255, 255, 0.07);
@@ -65,6 +66,7 @@
         .logo em {
             font-style: normal;
             color: var(--gold);
+            text-shadow: 0 0 14px rgba(var(--gold-rgb), 0.45);
         }
 
         .nav-links {
@@ -111,6 +113,11 @@
             padding: 140px 60px 100px;
             position: relative;
             overflow: hidden;
+            background:
+                radial-gradient(ellipse at 18% 25%, rgba(var(--gold-rgb), 0.11) 0%, transparent 42%),
+                radial-gradient(ellipse at 82% 75%, rgba(var(--gold-rgb), 0.08) 0%, transparent 38%),
+                radial-gradient(ellipse at 55% 10%, rgba(var(--gold-rgb), 0.06) 0%, transparent 35%),
+                var(--navy);
         }
 
         .hero::before {
@@ -121,18 +128,18 @@
             transform: translateX(-50%);
             width: 900px;
             height: 900px;
-            background: radial-gradient(circle, rgba(224, 92, 111, 0.07) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(224, 92, 111, 0.06) 0%, transparent 65%);
             pointer-events: none;
         }
 
         .hero::after {
             content: '';
             position: absolute;
-            bottom: -100px;
-            right: -100px;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 65%);
+            bottom: -80px;
+            left: -80px;
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(var(--gold-rgb), 0.05) 0%, transparent 65%);
             pointer-events: none;
         }
 
@@ -367,6 +374,7 @@
             margin: 0 auto 22px;
             position: relative;
             z-index: 1;
+            box-shadow: 0 0 18px rgba(var(--gold-rgb), 0.18);
         }
 
         .step h3 {
@@ -388,7 +396,7 @@
 
         .cta-box {
             background: linear-gradient(135deg, #111D35 0%, #0D1628 100%);
-            border: 1px solid var(--border);
+            border: 1px solid rgba(var(--gold-rgb), 0.18);
             border-radius: 18px;
             padding: 72px 60px;
             text-align: center;
@@ -396,16 +404,17 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 60px rgba(var(--gold-rgb), 0.06), inset 0 1px 0 rgba(var(--gold-rgb), 0.12);
         }
 
         .cta-box::before {
             content: '';
             position: absolute;
-            top: -120px;
-            right: -80px;
-            width: 360px;
-            height: 360px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            top: -100px;
+            right: -60px;
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(var(--gold-rgb), 0.08) 0%, transparent 65%);
             pointer-events: none;
         }
 
@@ -462,7 +471,7 @@
         }
 
         .perk-check {
-            color: var(--coral);
+            color: var(--gold);
             font-size: 13px;
         }
 
