@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Horse — GHL Implementation for Agencies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0B1120;
+            --navy-light: #0F1829;
+            --navy-card: #111D35;
+            --coral: #E05C6F;
+            --gold: #C9A84C;
+            --gold-light: #D4B86A;
+            --white: #FFFFFF;
+            --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-cta {
+            background: var(--coral) !important;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            transition: opacity 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.85;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 60px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(224, 92, 111, 0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.04) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border-radius: 20px;
+            margin-bottom: 36px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 5.5vw, 76px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            max-width: 920px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .accent {
+            color: var(--coral);
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 44px;
+            font-weight: 400;
+            line-height: 1.75;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── BUTTONS ── */
+        .btn-primary {
+            background: var(--coral);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s, transform 0.15s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.88;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: border-color 0.2s, transform 0.15s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.45);
+            transform: translateY(-2px);
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            padding: 100px 60px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(30px, 4vw, 46px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header h2 .accent {
+            color: var(--coral);
+        }
+
+        .section-header p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        /* ── FEATURES ── */
+        .features {
+            background: var(--navy-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--navy);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 36px 32px;
+            transition: border-color 0.25s, transform 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(201, 168, 76, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .feature-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* ── PROCESS ── */
+        .process-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 23px;
+            left: calc(12.5% + 4px);
+            right: calc(12.5% + 4px);
+            height: 1px;
+            background: linear-gradient(to right, rgba(201, 168, 76, 0.6), rgba(201, 168, 76, 0.1));
+        }
+
+        .step {
+            text-align: center;
+            padding: 0 8px;
+        }
+
+        .step-number {
+            width: 46px;
+            height: 46px;
+            background: var(--navy-card);
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0 auto 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            background: var(--navy-light);
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #111D35 0%, #0D1628 100%);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 72px 60px;
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -80px;
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-box::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(224, 92, 111, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box .btn-primary {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-perks {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .perk {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .perk-check {
+            color: var(--gold);
+            font-size: 13px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 36px 60px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .footer-logo em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .footer-tagline {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav {
+                padding: 18px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 70px 24px;
+            }
+
+            .hero {
+                padding: 120px 24px 70px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 36px;
+            }
+
+            .process-steps::before {
+                display: none;
+            }
+
+            .cta-box {
+                padding: 50px 28px;
+            }
+
+            .cta-perks {
+                gap: 16px;
+            }
+
+            footer {
+                padding: 30px 24px;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#home" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="nav-cta">Work With Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-inner">
+            <div class="hero-badge">Dark Horse</div>
+            <h1>Your Agency Closes Deals.<br><span class="accent">I Build What You Promised.</span></h1>
+            <p>GoHighLevel implementation for marketing agencies who need a reliable build partner — without adding headcount.</p>
+            <div class="hero-buttons">
+                <a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="btn-primary">Get Started &rarr;</a>
+                <a href="#services" class="btn-secondary">View Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUILT FOR AGENCIES -->
+    <section class="features" id="services">
+        <div class="section-header">
+            <span class="section-label">What I Do</span>
+            <h2>Built for <span class="accent">Agencies</span></h2>
+            <p>Stop losing deals because you can't deliver fast enough. Get a partner who understands the urgency.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+                <h3>Reliable Delivery</h3>
+                <p>Accurate timelines you can count on. I deliver what you promised, on schedule, every time.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
+                <h3>White-Label Ready</h3>
+                <p>Seamless integration under your brand. Your clients never know there's a build partner behind the scenes.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                </svg>
+                <h3>Complete Automation</h3>
+                <p>End-to-end workflow automation, from lead capture to client onboarding. Everything you sold, delivered.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                </svg>
+                <h3>Scale Without Hiring</h3>
+                <p>Take on more clients without expanding your team. Predictable delivery, predictable costs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process">
+        <div class="section-header">
+            <span class="section-label">How It Works</span>
+            <h2>Simple <span class="accent">Process</span></h2>
+            <p>From sold deal to deployed system in four straightforward steps.</p>
+        </div>
+        <div class="process-inner">
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Discovery Call</h3>
+                    <p>Share what you promised your client. I'll map out the technical requirements.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Scope &amp; Timeline</h3>
+                    <p>Get a fixed-price quote and delivery date. No surprises, no scope creep.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Implementation</h3>
+                    <p>I build while you focus on sales. Regular updates keep you in the loop.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Deployment</h3>
+                    <p>Full handoff with documentation. Your client is live and you look like a hero.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <div class="cta-box">
+            <h2>Ready to Stop Losing Deals?</h2>
+            <p>Partner with someone who can deliver on your promises. Let's talk about your next project.</p>
+            <a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="btn-primary">Schedule a Call &rarr;</a>
+            <div class="cta-perks">
+                <div class="perk"><span class="perk-check">✦</span> No upfront retainer required</div>
+                <div class="perk"><span class="perk-check">✦</span> Fixed pricing per project</div>
+                <div class="perk"><span class="perk-check">✦</span> White-label delivery</div>
+                <div class="perk"><span class="perk-check">✦</span> Clear timelines on every build</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+        </div>
+        <div class="footer-copy">&copy; 2026 Dark Horse. All rights reserved.</div>
+    </footer>
+
+</body>
+</html>
