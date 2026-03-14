@@ -1258,24 +1258,40 @@
             if (e.key === 'Escape') closeMenu();
         });
 
-        // Scroll to top of contact section after GHL form submits
-        // GHL sends a SET_HEIGHT postMessage when form content changes (form → thank you)
-        const formInitialHeight = 1500;
-        window.addEventListener('message', function(e) {
-            try {
-                const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                if (
-                    data &&
-                    data.id &&
-                    data.id.includes('CmNhKeH127nthMLD4Lw2') &&
-                    data.type === 'SET_HEIGHT' &&
-                    data.height < formInitialHeight * 0.6
-                ) {
-                    // Height dropped significantly — thank you message has replaced the form
-                    document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Scroll to contact section top when GHL form submits (thank you appears)
+        const ghlIframe = document.getElementById('inline-CmNhKeH127nthMLD4Lw2');
+        let formLoaded = false;
+        let lastHeight = 0;
+
+        if (ghlIframe) {
+            const scrollToContact = () => {
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+
+            // Watch for height attribute changes directly on the iframe
+            new MutationObserver(function() {
+                const h = parseInt(ghlIframe.style.height) || ghlIframe.offsetHeight;
+                if (formLoaded && h > 0 && h < lastHeight * 0.7) {
+                    scrollToContact();
                 }
-            } catch(e) {}
-        });
+                if (h > 200) { formLoaded = true; lastHeight = h; }
+            }).observe(ghlIframe, { attributes: true, attributeFilter: ['style', 'height'] });
+
+            // Also catch GHL postMessage events
+            window.addEventListener('message', function(e) {
+                try {
+                    const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+                    if (d && d.id && d.id.includes('CmNhKeH127nthMLD4Lw2')) {
+                        if (d.type === 'SET_HEIGHT') {
+                            if (formLoaded && d.height > 0 && d.height < lastHeight * 0.7) scrollToContact();
+                            if (d.height > 200) { formLoaded = true; lastHeight = d.height; }
+                        }
+                        // Some GHL versions fire a form_submitted event
+                        if (d.type === 'form_submitted' || d.event === 'form_submitted') scrollToContact();
+                    }
+                } catch(err) {}
+            });
+        }
     </script>
 
 </body>
