@@ -588,29 +588,44 @@
 
         /* ── MOBILE MENU ── */
         .mobile-menu {
-            display: none;
             position: fixed;
-            top: 65px;
+            top: 0;
             left: 0;
             right: 0;
-            background: rgba(11, 17, 32, 0.98);
-            backdrop-filter: blur(16px);
+            background: rgba(11, 17, 32, 0.99);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 12px 24px 24px;
+            padding: 0 24px 28px;
             z-index: 99;
+            display: flex;
             flex-direction: column;
+            /* Hidden state */
+            transform: translateY(-105%);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.25s ease;
         }
 
         .mobile-menu.open {
-            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Spacer so links start below the nav bar */
+        .mobile-menu-spacer {
+            height: 65px;
+            flex-shrink: 0;
         }
 
         .mobile-menu a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 500;
-            padding: 16px 0;
+            padding: 18px 0;
             border-bottom: 1px solid var(--border);
             transition: color 0.2s;
             font-family: 'Poppins', sans-serif;
@@ -629,6 +644,19 @@
             font-weight: 600 !important;
             margin-top: 16px;
             border-bottom: none !important;
+        }
+
+        .mobile-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 98;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-backdrop.open {
+            display: block;
         }
 
         /* ── RESPONSIVE ── */
@@ -678,11 +706,13 @@
 
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
         <a href="services.html">Services & Rates</a>
         <a href="index.html#process">Process</a>
         <a href="index.html#contact">Contact</a>
         <a href="https://api.hellodarkhorse.com/widget/booking/7fgTRiprs2T5zMqmjXLg" class="mobile-cta">Work With Me</a>
     </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
     <!-- PAGE HERO -->
     <div class="page-hero">
@@ -896,19 +926,50 @@
     </footer>
 
     <script>
-        const navToggle = document.getElementById('navToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+        // ── Mobile navigation ──
+        const navToggle      = document.getElementById('navToggle');
+        const mobileMenu     = document.getElementById('mobileMenu');
+        const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+        // Align spacer height with actual nav height
+        function syncMenuTop() {
+            const navH = document.querySelector('nav').offsetHeight;
+            mobileMenu.querySelector('.mobile-menu-spacer').style.height = navH + 'px';
+        }
+        syncMenuTop();
+        window.addEventListener('resize', syncMenuTop);
+
+        function openMenu() {
+            navToggle.classList.add('active');
+            mobileMenu.classList.add('open');
+            mobileBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            navToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMenu() {
+            navToggle.classList.remove('active');
+            mobileMenu.classList.remove('open');
+            mobileBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
 
         navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            mobileMenu.classList.toggle('open');
+            mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
         });
 
+        // Close on backdrop tap
+        mobileBackdrop.addEventListener('click', closeMenu);
+
+        // Close when a link is tapped
         mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                mobileMenu.classList.remove('open');
-            });
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
         });
     </script>
 
