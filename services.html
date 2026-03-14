@@ -179,8 +179,32 @@
         }
 
         /* ── SERVICES GRID ── */
-        .services-section { background: var(--navy-light); }
+        .services-section {
+            background: var(--navy-light);
+            position: relative;
+            overflow: hidden;
+        }
 
+        /* ── LIGHTNING BACKGROUND ── */
+        .lightning-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .lightning-bolt {
+            position: absolute;
+            fill: rgba(224, 92, 111, 0.07);
+        }
+
+        .services-section .section-header,
+        .services-grid {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── GLASSMORPHISM SERVICE CARDS ── */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -190,22 +214,33 @@
         }
 
         .service-card {
-            background: var(--navy);
-            border: 1px solid var(--border);
+            background: rgba(11, 17, 32, 0.55);
+            border: 1px solid rgba(224, 92, 111, 0.18);
+            border-top: 2px solid rgba(224, 92, 111, 0.6);
             border-radius: 14px;
             padding: 32px 28px;
-            transition: border-color 0.25s, transform 0.2s;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(224, 92, 111, 0.1);
+            transition: border-color 0.3s, border-top-color 0.3s, transform 0.25s, box-shadow 0.3s;
         }
 
         .service-card:hover {
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
+            border-color: rgba(224, 92, 111, 0.4);
+            border-top-color: var(--coral);
+            transform: translateY(-5px);
+            box-shadow:
+                0 12px 36px rgba(0, 0, 0, 0.4),
+                0 0 28px rgba(224, 92, 111, 0.13),
+                inset 0 1px 0 rgba(224, 92, 111, 0.22);
         }
 
         .service-icon {
             width: 36px;
             height: 36px;
-            color: var(--gold);
+            color: var(--coral);
             margin-bottom: 18px;
         }
 
@@ -644,6 +679,23 @@
 
     <!-- SERVICES -->
     <section class="services-section" id="services">
+
+        <!-- LIGHTNING BOLT BACKGROUND DECORATIONS -->
+        <div class="lightning-bg" aria-hidden="true">
+            <!-- Top left cluster -->
+            <svg class="lightning-bolt" style="width:60px;top:4%;left:1%;transform:rotate(-12deg);opacity:0.8" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg class="lightning-bolt" style="width:110px;top:2%;left:7%;transform:rotate(-8deg);opacity:0.55" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg class="lightning-bolt" style="width:45px;top:14%;left:3%;transform:rotate(-18deg);opacity:0.6" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg class="lightning-bolt" style="width:75px;top:1%;left:18%;transform:rotate(-5deg);opacity:0.45" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <!-- Top right cluster -->
+            <svg class="lightning-bolt" style="width:90px;top:3%;right:8%;transform:rotate(10deg);opacity:0.6" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg class="lightning-bolt" style="width:55px;top:8%;right:2%;transform:rotate(15deg);opacity:0.75" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg class="lightning-bolt" style="width:130px;top:1%;right:18%;transform:rotate(6deg);opacity:0.4" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <!-- Bottom accents -->
+            <svg class="lightning-bolt" style="width:50px;bottom:6%;left:5%;transform:rotate(-20deg);opacity:0.5" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg class="lightning-bolt" style="width:70px;bottom:4%;right:6%;transform:rotate(18deg);opacity:0.45" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+        </div>
+
         <div class="section-header">
             <h2>What We <span class="accent">Build</span></h2>
             <p>A full range of GHL implementation services, handled end-to-end under your brand.</p>
