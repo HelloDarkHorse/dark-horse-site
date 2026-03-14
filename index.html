@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Horse — GHL Implementation for Agencies</title>
-    <meta name="description" content="Dark Horse is a GHL implementation partner for marketing agencies. We build the funnels, automations, and systems you promised your clients — on time, under your brand.">
-    <meta property="og:title" content="Dark Horse — GHL Implementation for Agencies">
-    <meta property="og:description" content="Your agency closes deals. We build what you promised. GoHighLevel implementation, white-label delivery, fixed pricing.">
+    <title>Dark Horse — GoHighLevel Implementation for Marketing Agencies</title>
+    <meta name="description" content="White-label GHL build partner for marketing agencies. Funnels, automations, pipelines, and subaccount setups — delivered under your brand.">
+    <meta property="og:title" content="Dark Horse — GoHighLevel Implementation for Marketing Agencies">
+    <meta property="og:description" content="White-label GHL build partner for marketing agencies. Funnels, automations, pipelines, and subaccount setups — delivered under your brand.">
     <meta property="og:url" content="https://hellodarkhorse.com">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -755,47 +755,90 @@
 
         /* ── MOBILE MENU ── */
         .mobile-menu {
-            display: none;
             position: fixed;
-            top: 65px;
+            top: 0;
             left: 0;
             right: 0;
-            background: rgba(11, 17, 32, 0.98);
-            backdrop-filter: blur(16px);
+            background: rgba(11, 17, 32, 0.99);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 12px 24px 24px;
+            padding: 0 24px 28px;
             z-index: 99;
+            display: flex;
             flex-direction: column;
+            /* Hidden state */
+            transform: translateY(-105%);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.25s ease;
         }
 
         .mobile-menu.open {
-            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Spacer so links start below the nav bar */
+        .mobile-menu-spacer {
+            height: 65px;
+            flex-shrink: 0;
         }
 
         .mobile-menu a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 500;
-            padding: 16px 0;
+            padding: 18px 0;
             border-bottom: 1px solid var(--border);
-            transition: color 0.2s;
+            transition: color 0.2s, padding-left 0.2s;
             font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
         }
 
-        .mobile-menu a:hover {
+        .mobile-menu a:hover,
+        .mobile-menu a:active {
             color: var(--white);
+            padding-left: 6px;
         }
 
         .mobile-menu .mobile-cta {
             background: var(--coral);
             color: white !important;
-            padding: 15px 20px;
-            border-radius: 7px;
+            padding: 16px 20px;
+            border-radius: 8px;
             text-align: center;
             font-weight: 600 !important;
-            margin-top: 16px;
+            margin-top: 20px;
             border-bottom: none !important;
+            justify-content: center;
+            font-size: 16px !important;
+            letter-spacing: 0.3px;
+            transition: background 0.2s, transform 0.15s !important;
+        }
+
+        .mobile-menu .mobile-cta:hover {
+            background: #cc4d60;
+            padding-left: 20px;
+            transform: scale(1.01);
+        }
+
+        /* ── BACKDROP ── */
+        .mobile-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 98;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-backdrop.open {
+            display: block;
         }
 
         /* ── RESPONSIVE ── */
@@ -870,11 +913,15 @@
 
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="services.html">Services & Rates</a>
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">Services &amp; Rates</a>
         <a href="#process">Process</a>
         <a href="#contact">Contact</a>
         <a href="https://api.darkhorseva.net/widget/booking/7fgTRiprs2T5zMqmjXLg" class="mobile-cta">Work With Me</a>
     </div>
+
+    <!-- MOBILE BACKDROP -->
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
     <!-- HERO -->
     <section class="hero" id="home">
@@ -1080,20 +1127,50 @@
     </footer>
 
     <script>
-        const navToggle = document.getElementById('navToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+        // ── Mobile navigation ──
+        const navToggle    = document.getElementById('navToggle');
+        const mobileMenu   = document.getElementById('mobileMenu');
+        const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+        // Align mobile menu top with nav height
+        function syncMenuTop() {
+            const navH = document.querySelector('nav').offsetHeight;
+            mobileMenu.querySelector('.mobile-menu-spacer').style.height = navH + 'px';
+        }
+        syncMenuTop();
+        window.addEventListener('resize', syncMenuTop);
+
+        function openMenu() {
+            navToggle.classList.add('active');
+            mobileMenu.classList.add('open');
+            mobileBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            navToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMenu() {
+            navToggle.classList.remove('active');
+            mobileMenu.classList.remove('open');
+            mobileBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
 
         navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            mobileMenu.classList.toggle('open');
+            mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
         });
 
-        // Close menu when a link is clicked
+        // Close on backdrop tap
+        mobileBackdrop.addEventListener('click', closeMenu);
+
+        // Close when a link is tapped
         mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                mobileMenu.classList.remove('open');
-            });
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
         });
     </script>
 
