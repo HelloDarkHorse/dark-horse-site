@@ -1278,9 +1278,13 @@
             if (submitted) return;
             submitted = true;
             ghlIframe.style.display = 'none';
+            // Strip the box styling so the thank you sits cleanly without empty space
+            formWrap.style.background = 'none';
+            formWrap.style.border = 'none';
+            formWrap.style.borderRadius = '0';
             thankYou.style.display = 'block';
             const navH = document.querySelector('nav').offsetHeight;
-            const top = formWrap.getBoundingClientRect().top + window.scrollY - navH - 16;
+            const top = thankYou.getBoundingClientRect().top + window.scrollY - navH - 16;
             window.scrollTo({ top: top, behavior: 'smooth' });
         };
 
