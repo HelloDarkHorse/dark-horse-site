@@ -1257,6 +1257,25 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeMenu();
         });
+
+        // Scroll to top of contact section after GHL form submits
+        // GHL sends a SET_HEIGHT postMessage when form content changes (form → thank you)
+        const formInitialHeight = 1500;
+        window.addEventListener('message', function(e) {
+            try {
+                const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+                if (
+                    data &&
+                    data.id &&
+                    data.id.includes('CmNhKeH127nthMLD4Lw2') &&
+                    data.type === 'SET_HEIGHT' &&
+                    data.height < formInitialHeight * 0.6
+                ) {
+                    // Height dropped significantly — thank you message has replaced the form
+                    document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } catch(e) {}
+        });
     </script>
 
 </body>
