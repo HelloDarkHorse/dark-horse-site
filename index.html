@@ -1285,28 +1285,28 @@
         };
 
         if (ghlIframe) {
-            new MutationObserver(function() {
-                const h = parseInt(ghlIframe.style.height) || ghlIframe.offsetHeight;
+            // Method 1: iframe onload fires again when thank you page navigates
+            let iframeLoads = 0;
+            ghlIframe.addEventListener('load', function() {
+                iframeLoads++;
+                if (iframeLoads > 1) showThankYou();
+            });
+
+            // Method 2: poll iframe height every 500ms — GHL may update it after submit
+            setInterval(function() {
+                const h = parseInt(ghlIframe.style.height) || 0;
+                if (h > 200) { formLoaded = true; lastHeight = Math.max(lastHeight, h); }
                 if (formLoaded && h > 0 && h < lastHeight * 0.7) showThankYou();
-                if (h > 200) { formLoaded = true; lastHeight = h; }
-            }).observe(ghlIframe, { attributes: true, attributeFilter: ['style', 'height'] });
+            }, 500);
 
+            // Method 3: postMessage catch-all
             window.addEventListener('message', function(e) {
-                // DEBUG: log ALL postMessages regardless of source
-                try {
-                    console.log('MSG from', e.origin, ':', JSON.stringify(e.data));
-                } catch(err) {
-                    console.log('MSG from', e.origin, ':', e.data);
-                }
-
                 try {
                     const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                    if (d && d.id && d.id.includes('CmNhKeH127nthMLD4Lw2')) {
-                        if (d.type === 'SET_HEIGHT') {
-                            if (formLoaded && d.height > 0 && d.height < lastHeight * 0.7) showThankYou();
-                            if (d.height > 200) { formLoaded = true; lastHeight = d.height; }
-                        }
-                        if (d.type === 'form_submitted' || d.event === 'form_submitted') showThankYou();
+                    if (!d) return;
+                    const s = JSON.stringify(d).toLowerCase();
+                    if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you') || s.includes('success')) {
+                        showThankYou();
                     }
                 } catch(err) {}
             });
