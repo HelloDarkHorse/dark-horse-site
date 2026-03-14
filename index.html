@@ -1292,6 +1292,14 @@
             }).observe(ghlIframe, { attributes: true, attributeFilter: ['style', 'height'] });
 
             window.addEventListener('message', function(e) {
+                // DEBUG: log all messages from GHL iframe — remove after testing
+                try {
+                    const raw = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+                    if (raw && raw.id && raw.id.includes('CmNhKeH127nthMLD4Lw2')) {
+                        console.log('GHL message:', JSON.stringify(raw));
+                    }
+                } catch(err) {}
+
                 try {
                     const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
                     if (d && d.id && d.id.includes('CmNhKeH127nthMLD4Lw2')) {
