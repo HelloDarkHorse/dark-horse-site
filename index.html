@@ -1277,11 +1277,8 @@
         const showThankYou = () => {
             if (submitted) return;
             submitted = true;
-            ghlIframe.style.display = 'none';
-            // Strip the box styling so the thank you sits cleanly without empty space
-            formWrap.style.background = 'none';
-            formWrap.style.border = 'none';
-            formWrap.style.borderRadius = '0';
+            // Hide the entire form wrap (iframe + anything GHL's embed script injected)
+            formWrap.style.display = 'none';
             thankYou.style.display = 'block';
             const navH = document.querySelector('nav').offsetHeight;
             const top = thankYou.getBoundingClientRect().top + window.scrollY - navH - 16;
