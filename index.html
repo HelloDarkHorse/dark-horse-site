@@ -937,6 +937,159 @@
                 text-align: center;
             }
         }
+
+        /* ── RESULTS TEASER ── */
+        .results-teaser {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .results-teaser .section-header { margin-bottom: 48px; }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            background: var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .result-stat {
+            background: var(--navy-card);
+            padding: 36px 28px;
+            text-align: center;
+        }
+        .result-stat .stat-number {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 900;
+            color: var(--coral);
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        .result-stat .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .results-teaser-cta {
+            text-align: center;
+        }
+        .results-teaser-cta a {
+            font-size: 14px;
+            color: var(--coral);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(224,92,111,0.35);
+            padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+        .results-teaser-cta a:hover { border-color: var(--coral); }
+
+        /* ── WHY ME ── */
+        .why-me-section {
+            background: var(--navy);
+        }
+        .why-me-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+        .why-col h3 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .why-col.yes h3 { color: var(--coral); }
+        .why-col.no h3 { color: var(--text-muted); }
+        .why-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+        .why-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+        .why-list li .wi {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .why-col.yes .wi { background: rgba(224,92,111,0.15); color: var(--coral); }
+        .why-col.no .wi { background: rgba(138,155,181,0.1); color: var(--text-muted); }
+        .why-col.yes li { color: var(--white); }
+
+        /* ── NOT A FIT ── */
+        .not-fit-section {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+        }
+        .not-fit-inner {
+            max-width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .not-fit-inner .section-header { margin-bottom: 40px; }
+        .not-fit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            text-align: left;
+        }
+        .not-fit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .not-fit-item::before {
+            content: "✕";
+            color: rgba(224,92,111,0.5);
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .not-fit-note {
+            margin-top: 28px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .not-fit-note a {
+            color: var(--coral);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid { grid-template-columns: 1fr; }
+            .why-me-inner { grid-template-columns: 1fr; }
+            .not-fit-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -1029,6 +1182,33 @@
         </div>
     </section>
 
+
+    <!-- RESULTS TEASER -->
+    <section class="results-teaser" style="padding: 80px 60px;">
+        <div class="section-header">
+            <span class="section-label">Proof It Works</span>
+            <h2>Numbers That <span class="accent">Speak For Themselves</span></h2>
+            <p>Real results from real builds — not projections.</p>
+        </div>
+        <div class="results-grid">
+            <div class="result-stat">
+                <div class="stat-number">90%</div>
+                <div class="stat-label">Reduction in cost per lead — from $12–$20 down to $1–$2</div>
+            </div>
+            <div class="result-stat">
+                <div class="stat-number">50%</div>
+                <div class="stat-label">Lead-to-booking conversion rate after staff training + automation</div>
+            </div>
+            <div class="result-stat">
+                <div class="stat-number">18mo</div>
+                <div class="stat-label">Average client engagement — because the systems actually work</div>
+            </div>
+        </div>
+        <div class="results-teaser-cta">
+            <a href="case-studies.html">See the full case studies &rarr;</a>
+        </div>
+    </section>
+
     <!-- ABOUT -->
     <section class="about-section" id="about">
         <div class="about-inner">
@@ -1047,6 +1227,40 @@
                 <p>Dark Horse is my focused, intentional pivot into GHL implementation for marketing agencies. Not a side service. Not an add-on. <strong>This is the whole thing.</strong></p>
                 <p>You bring the client, I build the system — on time, under your brand, exactly as promised.</p>
                 <p class="team-bridge">Dark Horse is a small, focused team built around GHL delivery. Every project gets the right person on it — and you always have a single point of contact.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- WHY ME -->
+    <section class="why-me-section" style="padding: 80px 60px;">
+        <div class="section-header">
+            <span class="section-label">Why Dark Horse</span>
+            <h2>Not Just Another <span class="accent">GHL Freelancer</span></h2>
+            <p>Fiverr exists. Upwork exists. Here's the honest difference.</p>
+        </div>
+        <div class="why-me-inner">
+            <div class="why-col yes">
+                <h3>Dark Horse</h3>
+                <ul class="why-list">
+                    <li><span class="wi">✓</span>16+ years in marketing, web, and automation</li>
+                    <li><span class="wi">✓</span>Understands agency timelines and client pressure</li>
+                    <li><span class="wi">✓</span>Builds funnels that convert — not just look good</li>
+                    <li><span class="wi">✓</span>White-label delivery, zero client-facing footprint</li>
+                    <li><span class="wi">✓</span>Fixed pricing — no scope creep, no surprises</li>
+                    <li><span class="wi">✓</span>Direct communication, fast response times</li>
+                </ul>
+            </div>
+            <div class="why-col no">
+                <h3>The Alternative</h3>
+                <ul class="why-list">
+                    <li><span class="wi">✕</span>Learning GHL on your client's dime</li>
+                    <li><span class="wi">✕</span>Disappears mid-project, no accountability</li>
+                    <li><span class="wi">✕</span>Builds what you asked for — not what will work</li>
+                    <li><span class="wi">✕</span>You manage them, then manage the client</li>
+                    <li><span class="wi">✕</span>Hourly billing that balloons past the budget</li>
+                    <li><span class="wi">✕</span>Timezone gaps, slow turnarounds, radio silence</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -1125,6 +1339,27 @@
                     <p>Full handoff with documentation. Your client is live and you look like a hero.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+
+    <!-- NOT A FIT -->
+    <section class="not-fit-section" style="padding: 80px 60px;">
+        <div class="not-fit-inner">
+            <div class="section-header">
+                <span class="section-label">Honest Transparency</span>
+                <h2>This Might Not Be <span class="accent">The Right Fit</span></h2>
+                <p>I'd rather you know upfront than waste both our time.</p>
+            </div>
+            <div class="not-fit-grid">
+                <div class="not-fit-item">You're looking for the cheapest option — there are faster, lower-cost freelancers out there</div>
+                <div class="not-fit-item">You need strategy, branding, or paid ads — that's not what we build here</div>
+                <div class="not-fit-item">You don't use GoHighLevel — this is a GHL-only implementation shop</div>
+                <div class="not-fit-item">You need someone to manage your clients for you — we build systems, not account management</div>
+                <div class="not-fit-item">You want to start without a clear scope — every project needs a defined deliverable</div>
+                <div class="not-fit-item">You need it done tomorrow — quality builds take the right amount of time</div>
+            </div>
+            <p class="not-fit-note">If none of that applies — <a href="https://api.hellodarkhorse.com/widget/booking/7fgTRiprs2T5zMqmjXLg">let's talk &rarr;</a></p>
         </div>
     </section>
 
