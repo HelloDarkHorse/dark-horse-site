@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { background: transparent; width: 100%; overflow-x: hidden; }
+        html, body { background: transparent; width: 100%; overflow: hidden; }
 
         #thank-you {
             display: none;
@@ -16,67 +16,21 @@
             font-family: 'Poppins', sans-serif;
         }
         #thank-you .icon { font-size: 48px; margin-bottom: 20px; color: #ffffff; }
-        #thank-you h3 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-        }
-        #thank-you p {
-            color: rgba(255,255,255,0.65);
-            font-size: 16px;
-            max-width: 420px;
-            margin: 0 auto 32px;
-        }
-        #thank-you .sig {
-            color: #E05C6F;
-            font-weight: 600;
-            font-size: 15px;
-        }
+        #thank-you h3 { font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 16px; }
+        #thank-you p { color: rgba(255,255,255,0.65); font-size: 16px; max-width: 420px; margin: 0 auto 32px; }
+        #thank-you .sig { color: #E05C6F; font-weight: 600; font-size: 15px; }
     </style>
-
-    <script>
-        // Intercept ALL postMessages from this wrapper to the main page.
-        // form_embed.js calls window.parent.postMessage() with its own format —
-        // we rewrite those to our ghlResize format so the main page can handle them.
-        let submitted = false;
-        const _orig = window.parent.postMessage.bind(window.parent);
-        window.parent.postMessage = function(data, origin) {
-            try {
-                const d = typeof data === 'string' ? JSON.parse(data) : data;
-                if (d && d.height && !submitted) {
-                    const h = parseInt(d.height);
-                    if (h > 100) {
-                        _orig({ type: 'ghlResize', height: h }, '*');
-                        return;
-                    }
-                }
-            } catch(e) {}
-            _orig(data, origin || '*');
-        };
-    </script>
 </head>
 <body>
 
+    <!-- No form_embed.js — fixed height so GHL can't shrink it -->
     <iframe
         src="https://api.darkhorseva.net/widget/form/CmNhKeH127nthMLD4Lw2"
-        id="inline-CmNhKeH127nthMLD4Lw2"
+        id="ghl-iframe"
         style="width:100%;height:2000px;border:none;display:block;"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="Form For Home Page"
-        data-height="1500"
-        data-layout-iframe-id="inline-CmNhKeH127nthMLD4Lw2"
-        data-form-id="CmNhKeH127nthMLD4Lw2"
-        title="Form For Home Page"
+        title="Contact Form"
         scrolling="no"
     ></iframe>
-    <script src="https://api.darkhorseva.net/js/form_embed.js"></script>
 
     <div id="thank-you">
         <div class="icon">✦</div>
@@ -86,11 +40,10 @@
     </div>
 
     <script>
-        const ghlFrame  = document.getElementById('inline-CmNhKeH127nthMLD4Lw2');
-        const thankYou  = document.getElementById('thank-you');
-        let iframeLoads = 0;
-        let lastHeight  = 0;
-        let formLoaded  = false;
+        const ghlFrame = document.getElementById('ghl-iframe');
+        const thankYou = document.getElementById('thank-you');
+        let submitted  = false;
+        let loads      = 0;
 
         const showThankYou = () => {
             if (submitted) return;
@@ -100,22 +53,14 @@
             window.parent.postMessage({ type: 'ghlFormSubmitted', height: 400 }, '*');
         };
 
-        // Method 1: second load = GHL navigated to its thank-you page
-        ghlFrame.addEventListener('load', function() {
-            iframeLoads++;
-            if (iframeLoads > 1) showThankYou();
+        // Method 1: second load = GHL navigated to thank-you page
+        ghlFrame.addEventListener('load', () => {
+            loads++;
+            if (loads > 1) showThankYou();
         });
 
-        // Method 2: poll height for submission shrink detection
-        setInterval(function() {
-            if (submitted) return;
-            const h = parseInt(ghlFrame.style.height) || 0;
-            if (h > 200) { formLoaded = true; lastHeight = Math.max(lastHeight, h); }
-            if (formLoaded && h > 0 && h < lastHeight * 0.7) showThankYou();
-        }, 300);
-
-        // Method 3: postMessage scan for submission keywords
-        window.addEventListener('message', function(e) {
+        // Method 2: postMessage scan
+        window.addEventListener('message', (e) => {
             try {
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
                 if (!d) return;
