@@ -1247,26 +1247,33 @@
             if (e.key === 'Escape') closeMenu();
         });
 
-        // Listen for messages from form-wrapper.html
+        // Auto-size the wrapper iframe to its actual content height (same-origin)
+        const wrapperIframe = document.getElementById('formWrapperIframe');
+        const syncWrapperHeight = () => {
+            try {
+                const h = wrapperIframe.contentDocument.documentElement.scrollHeight;
+                if (h > 200) wrapperIframe.style.height = h + 'px';
+            } catch(e) {}
+        };
+        wrapperIframe.addEventListener('load', syncWrapperHeight);
+        // Poll for a few seconds after load in case inner GHL iframe loads async
+        wrapperIframe.addEventListener('load', () => {
+            let polls = 0;
+            const t = setInterval(() => {
+                syncWrapperHeight();
+                if (++polls >= 20) clearInterval(t);
+            }, 300);
+        });
+
+        // Form submitted — shrink to thank you size and scroll to it
         window.addEventListener('message', function(e) {
             try {
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                if (!d) return;
-                const wrapperIframe = document.getElementById('formWrapperIframe');
-                if (!wrapperIframe) return;
-
-                // GHL resize — keep outer iframe tall enough to show the full form
-                if (d.type === 'ghlResize' && d.height) {
-                    wrapperIframe.style.height = (parseInt(d.height) + 40) + 'px';
-                }
-
-                // Form submitted — shrink to thank you size and scroll to it
-                if (d.type === 'ghlFormSubmitted') {
-                    wrapperIframe.style.height = (d.height || 400) + 'px';
-                    const navH = document.querySelector('nav').offsetHeight;
-                    const top = wrapperIframe.getBoundingClientRect().top + window.scrollY - navH - 16;
-                    window.scrollTo({ top: top, behavior: 'smooth' });
-                }
+                if (!d || d.type !== 'ghlFormSubmitted') return;
+                wrapperIframe.style.height = (d.height || 400) + 'px';
+                const navH = document.querySelector('nav').offsetHeight;
+                const top = wrapperIframe.getBoundingClientRect().top + window.scrollY - navH - 16;
+                window.scrollTo({ top: top, behavior: 'smooth' });
             } catch(err) {}
         });
     </script>
