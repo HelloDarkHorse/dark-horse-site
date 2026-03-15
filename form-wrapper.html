@@ -61,6 +61,7 @@
         // Method 2: postMessage — catch GHL height updates AND submission signals
         window.addEventListener('message', (e) => {
             try {
+                console.log('GHL msg:', JSON.stringify(e.data));
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
                 if (!d) return;
                 const s = JSON.stringify(d).toLowerCase();
