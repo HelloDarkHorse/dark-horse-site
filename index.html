@@ -1247,15 +1247,22 @@
             if (e.key === 'Escape') closeMenu();
         });
 
-        // Listen for form submission signal from form-wrapper.html
+        // Listen for messages from form-wrapper.html
         window.addEventListener('message', function(e) {
             try {
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                if (!d || d.type !== 'ghlFormSubmitted') return;
+                if (!d) return;
                 const wrapperIframe = document.getElementById('formWrapperIframe');
-                if (wrapperIframe) {
-                    const newHeight = d.height || 400;
-                    wrapperIframe.style.height = newHeight + 'px';
+                if (!wrapperIframe) return;
+
+                // GHL resize — keep outer iframe tall enough to show the full form
+                if (d.type === 'ghlResize' && d.height) {
+                    wrapperIframe.style.height = (parseInt(d.height) + 40) + 'px';
+                }
+
+                // Form submitted — shrink to thank you size and scroll to it
+                if (d.type === 'ghlFormSubmitted') {
+                    wrapperIframe.style.height = (d.height || 400) + 'px';
                     const navH = document.querySelector('nav').offsetHeight;
                     const top = wrapperIframe.getBoundingClientRect().top + window.scrollY - navH - 16;
                     window.scrollTo({ top: top, behavior: 'smooth' });

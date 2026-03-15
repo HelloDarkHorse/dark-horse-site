@@ -101,12 +101,23 @@
             if (formLoaded && h > 0 && h < lastHeight * 0.7) showThankYou();
         }, 500);
 
-        // Method 3: postMessage scan
+        // Method 3: postMessage scan — also forward GHL resize messages up to main page
         window.addEventListener('message', function(e) {
             try {
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
                 if (!d) return;
                 const s = JSON.stringify(d).toLowerCase();
+
+                // Forward GHL height/resize messages up to the main page
+                if (d.height && !submitted) {
+                    const h = parseInt(d.height);
+                    if (h > 100) {
+                        ghlFrame.style.height = h + 'px';
+                        window.parent.postMessage({ type: 'ghlResize', height: h }, '*');
+                    }
+                }
+
+                // Detect submission
                 if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you') || s.includes('success')) {
                     showThankYou();
                 }
