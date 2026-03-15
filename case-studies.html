@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies — Dark Horse GHL Implementation</title>
+    <meta name="description" content="Real results from real GHL builds. See how Dark Horse helped businesses cut lead costs, streamline operations, and scale faster.">
+    <meta property="og:title" content="Case Studies — Dark Horse GHL Implementation">
+    <meta property="og:description" content="Real results from real GHL builds. See how Dark Horse helped businesses cut lead costs, streamline operations, and scale faster.">
+    <meta property="og:url" content="https://hellodarkhorse.com/case-studies.html">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0B1120;
+            --navy-light: #0F1829;
+            --navy-card: #111D35;
+            --coral: #E05C6F;
+            --white: #FFFFFF;
+            --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .logo em { font-style: normal; color: var(--coral); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a.active { color: var(--white); }
+
+        .nav-cta {
+            background: var(--coral) !important;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            transition: opacity 0.2s !important;
+            letter-spacing: 0 !important;
+        }
+        .nav-cta:hover { opacity: 0.88; }
+
+        /* ── MOBILE NAV ── */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 99;
+            background: rgba(11, 17, 32, 0.98);
+            backdrop-filter: blur(16px);
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding-bottom: 32px;
+            transform: translateY(-100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open { transform: translateY(0); }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 16px 0;
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-cta {
+            background: var(--coral) !important;
+            color: white !important;
+            margin-top: 16px;
+            border-radius: 8px !important;
+            width: calc(100% - 48px) !important;
+            border-bottom: none !important;
+        }
+        .mobile-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 98;
+            background: rgba(0,0,0,0.5);
+        }
+        .mobile-backdrop.open { display: block; }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            padding: 160px 60px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(ellipse, rgba(224,92,111,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .page-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--coral);
+            display: block;
+            margin-bottom: 16px;
+        }
+        .page-hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .accent { color: var(--coral); }
+        .page-hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* ── CASE STUDIES SECTION ── */
+        .case-studies-section {
+            padding: 60px 60px 120px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        /* ── CASE STUDY CARD ── */
+        .case-study {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+            padding-bottom: 80px;
+            border-bottom: 1px solid var(--border);
+        }
+        .case-study:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .cs-left {}
+
+        .cs-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--coral);
+            background: rgba(224, 92, 111, 0.1);
+            border: 1px solid rgba(224, 92, 111, 0.25);
+            padding: 5px 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .cs-left h2 {
+            font-size: clamp(24px, 3vw, 34px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .cs-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 28px;
+        }
+        .cs-meta span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .cs-meta strong { color: var(--white); }
+
+        .cs-blockquote {
+            border-left: 3px solid var(--coral);
+            padding: 16px 20px;
+            background: rgba(224, 92, 111, 0.06);
+            border-radius: 0 8px 8px 0;
+            margin-top: 28px;
+        }
+        .cs-blockquote p {
+            font-size: 15px;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.65;
+            margin-bottom: 10px;
+        }
+        .cs-blockquote cite {
+            font-size: 12px;
+            font-style: normal;
+            color: var(--coral);
+            font-weight: 600;
+        }
+
+        /* ── RIGHT SIDE ── */
+        .cs-right {}
+
+        .cs-block {
+            margin-bottom: 32px;
+        }
+        .cs-block h3 {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin-bottom: 12px;
+        }
+        .cs-block p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        .cs-results {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+        .cs-results h3 {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin-bottom: 20px;
+        }
+        .result-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .result-item:last-child { margin-bottom: 0; }
+        .result-bullet {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--coral);
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+        .result-item p {
+            font-size: 15px;
+            color: var(--white);
+            line-height: 1.6;
+        }
+        .result-item strong { color: var(--coral); }
+
+        /* ── CTA SECTION ── */
+        .cta-section {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            padding: 100px 60px;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 17px;
+            max-width: 480px;
+            margin: 0 auto 36px;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: var(--coral);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.88; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 40px 60px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-logo {
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .footer-social-icons a {
+            color: var(--text-muted);
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-social-icons a:hover { color: var(--white); }
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 10px;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            nav { padding: 20px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .mobile-menu { display: flex; }
+
+            .page-hero { padding: 120px 24px 60px; }
+
+            .case-studies-section { padding: 40px 24px 80px; gap: 60px; }
+
+            .case-study {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding-bottom: 60px;
+            }
+
+            .cta-section { padding: 70px 24px; }
+
+            footer {
+                padding: 32px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .footer-links { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li><a href="services.html">Services & Rates</a></li>
+            <li><a href="case-studies.html" class="active">Case Studies</a></li>
+            <li><a href="index.html#process">Process</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="https://api.hellodarkhorse.com/widget/booking/7fgTRiprs2T5zMqmjXLg" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">Services &amp; Rates</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="index.html#process">Process</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://api.hellodarkhorse.com/widget/booking/7fgTRiprs2T5zMqmjXLg" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="page-hero-inner">
+            <span class="section-label">Case Studies</span>
+            <h1>Real Builds. <span class="accent">Real Results.</span></h1>
+            <p>A look at what happens when the right GHL system meets the right execution.</p>
+        </div>
+    </div>
+
+    <!-- CASE STUDIES -->
+    <section class="case-studies-section">
+
+        <!-- CASE STUDY 1: ANGIE HUGHES -->
+        <div class="case-study">
+            <div class="cs-left">
+                <span class="cs-tag">GHL Build + Ads + VA</span>
+                <h2>Taking a Good System and Making It <span class="accent">Great</span></h2>
+                <div class="cs-meta">
+                    <span><strong>Client:</strong> Angie Hughes Horsemanship</span>
+                    <span><strong>Industry:</strong> Equestrian / Horse Lessons</span>
+                    <span><strong>Engagement:</strong> ~18 months</span>
+                </div>
+                <div class="cs-blockquote">
+                    <p>"Having her on my team has been life changing... it's lightened our load and improved our efficiencies tremendously."</p>
+                    <cite>— Angie Hughes, Angie Hughes Horsemanship</cite>
+                </div>
+            </div>
+            <div class="cs-right">
+                <div class="cs-block">
+                    <h3>The Challenge</h3>
+                    <p>Angie came in already tech savvy with some systems in place — she wasn't starting from zero. But having a foundation and having a fully optimized, running operation are two different things. She needed someone who could meet her where she was, build on what existed, and take the time-consuming parts off her plate entirely.</p>
+                </div>
+                <div class="cs-block">
+                    <h3>What We Did</h3>
+                    <p>Dark Horse expanded her existing GoHighLevel setup with additional workflows, pipelines, automations, email sequences, and funnels. We ran targeted Facebook ad campaigns to drive a consistent stream of new leads — and embedded a dedicated VA directly into her operation to handle inbound follow-up and convert prospects into introductory lesson bookings.</p>
+                </div>
+                <div class="cs-results">
+                    <h3>Results</h3>
+                    <div class="result-item">
+                        <div class="result-bullet"></div>
+                        <p><strong>$1–$2 cost per lead</strong> from Facebook ad campaigns</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-bullet"></div>
+                        <p><strong>Consistent intro lesson bookings</strong> handled entirely by VA — without Angie's involvement</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-bullet"></div>
+                        <p><strong>Significant time savings</strong> — Angie stepped back from lead management and refocused on her work</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE STUDY 2: CHAGRIN VALLEY -->
+        <div class="case-study">
+            <div class="cs-left">
+                <span class="cs-tag">GHL Build + Training + Ads</span>
+                <h2>Cut Lead Costs by <span class="accent">90%.</span> Closed Half the Room.</h2>
+                <div class="cs-meta">
+                    <span><strong>Client:</strong> Chagrin Valley Farms</span>
+                    <span><strong>Industry:</strong> Equestrian / Horse Lessons</span>
+                    <span><strong>Owner:</strong> Eric Schneider</span>
+                </div>
+                <div class="cs-blockquote">
+                    <p>"The process has been incredibly smooth. She has delivered on all fronts — dedicated, knowledgeable, and results driven."</p>
+                    <cite>— Eric Schneider, Chagrin Valley Farms</cite>
+                </div>
+            </div>
+            <div class="cs-right">
+                <div class="cs-block">
+                    <h3>The Challenge</h3>
+                    <p>Chagrin Valley Farms was running Facebook ads and paying $12–$20 per lead with inconsistent results. Worse, the leads they did get weren't converting. Staff had no defined process for follow-up, no system to manage inquiries, and no training on how to move a prospect to a booked lesson. The problem wasn't awareness — it was operations.</p>
+                </div>
+                <div class="cs-block">
+                    <h3>What We Did</h3>
+                    <p>Dark Horse delivered a complete GoHighLevel build — workflows, pipelines, automations, email sequences, and funnels — plus website updates to align with the new funnel flow. We rebuilt the Facebook ad campaigns from the ground up. Then we trained Eric's staff directly inside GHL and walked them through lead conversion: how to respond, what to say, and how to move a prospect from interest to booked lesson.</p>
+                </div>
+                <div class="cs-results">
+                    <h3>Results</h3>
+                    <div class="result-item">
+                        <div class="result-bullet"></div>
+                        <p>Cost per lead dropped from <strong>$12–$20 down to $1–$2</strong> — a 90%+ reduction</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-bullet"></div>
+                        <p><strong>~50% lead-to-booking conversion rate</strong> achieved after staff training</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-bullet"></div>
+                        <p>Staff operating <strong>confidently inside GHL</strong> with no ongoing hand-holding required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <h2>Ready for Results <span class="accent">Like These?</span></h2>
+        <p>Let's talk about your GHL build and what we can accomplish together.</p>
+        <a href="https://api.hellodarkhorse.com/widget/booking/7fgTRiprs2T5zMqmjXLg" class="btn-primary">Work With Me</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/channel/UCJTB_uo3g6aYN_rzOH09d_Q" target="_blank" rel="noopener" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://share.google/GqfInfNO63GmSowGB" target="_blank" rel="noopener" aria-label="Google Reviews">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+            <a href="tel:6367460607" aria-label="Phone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+        </div>
+        <div class="footer-copy">© 2025 Dark Horse. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+        const openMenu = () => {
+            mobileMenu.classList.add('open');
+            mobileBackdrop.classList.add('open');
+            navToggle.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeMenu = () => {
+            mobileMenu.classList.remove('open');
+            mobileBackdrop.classList.remove('open');
+            navToggle.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+        navToggle.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
+        mobileBackdrop.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    </script>
+
+</body>
+</html>
