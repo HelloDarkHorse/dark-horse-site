@@ -1265,15 +1265,24 @@
             }, 300);
         });
 
-        // Form submitted — shrink to thank you size and scroll to it
+        // Listen for resize and submit messages from form-wrapper
         window.addEventListener('message', function(e) {
             try {
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                if (!d || d.type !== 'ghlFormSubmitted') return;
-                wrapperIframe.style.height = (d.height || 400) + 'px';
-                const navH = document.querySelector('nav').offsetHeight;
-                const top = wrapperIframe.getBoundingClientRect().top + window.scrollY - navH - 16;
-                window.scrollTo({ top: top, behavior: 'smooth' });
+                if (!d) return;
+
+                // GHL reported its own height — resize outer wrapper to match
+                if (d.type === 'ghlResize' && d.height) {
+                    wrapperIframe.style.height = (parseInt(d.height) + 20) + 'px';
+                }
+
+                // Form submitted — shrink to thank you and scroll
+                if (d.type === 'ghlFormSubmitted') {
+                    wrapperIframe.style.height = (d.height || 400) + 'px';
+                    const navH = document.querySelector('nav').offsetHeight;
+                    const top = wrapperIframe.getBoundingClientRect().top + window.scrollY - navH - 16;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
+                }
             } catch(err) {}
         });
     </script>

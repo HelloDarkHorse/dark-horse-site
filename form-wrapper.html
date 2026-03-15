@@ -23,11 +23,10 @@
 </head>
 <body>
 
-    <!-- No form_embed.js — fixed height so GHL can't shrink it -->
     <iframe
         src="https://api.darkhorseva.net/widget/form/CmNhKeH127nthMLD4Lw2"
         id="ghl-iframe"
-        style="width:100%;height:2000px;border:none;display:block;"
+        style="width:100%;height:1500px;border:none;display:block;"
         title="Contact Form"
         scrolling="no"
     ></iframe>
@@ -59,14 +58,27 @@
             if (loads > 1) showThankYou();
         });
 
-        // Method 2: postMessage scan
+        // Method 2: postMessage — catch GHL height updates AND submission signals
         window.addEventListener('message', (e) => {
             try {
                 const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
                 if (!d) return;
                 const s = JSON.stringify(d).toLowerCase();
+
+                // Submission detected
                 if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you') || s.includes('success')) {
                     showThankYou();
+                    return;
+                }
+
+                // Height resize from GHL — resize inner iframe and tell parent
+                const h = d.height || (d.data && d.data.height);
+                if (h && !submitted) {
+                    const px = parseInt(h);
+                    if (px > 100) {
+                        ghlFrame.style.height = px + 'px';
+                        window.parent.postMessage({ type: 'ghlResize', height: px }, '*');
+                    }
                 }
             } catch(err) {}
         });
