@@ -68,8 +68,8 @@
                 if (!d) return;
                 const s = JSON.stringify(d).toLowerCase();
 
-                // Submission keywords
-                if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you')) {
+                // Submission signal — GHL sends "set-sticky-contacts" when a lead is collected
+                if (s.includes('set-sticky-contacts') || s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you')) {
                     showThankYou();
                     return;
                 }
