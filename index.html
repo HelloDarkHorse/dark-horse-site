@@ -1151,32 +1151,13 @@
         <div class="contact-inner">
             <div class="contact-form-wrap" id="contactFormWrap">
                 <iframe
-                    src="https://api.darkhorseva.net/widget/form/CmNhKeH127nthMLD4Lw2"
-                    style="width:100%;height:1500px;border:none;"
-                    id="inline-CmNhKeH127nthMLD4Lw2"
-                    data-layout="{'id':'INLINE'}"
-                    data-trigger-type="alwaysShow"
-                    data-trigger-value=""
-                    data-activation-type="alwaysActivated"
-                    data-activation-value=""
-                    data-deactivation-type="neverDeactivate"
-                    data-deactivation-value=""
-                    data-form-name="Form For Home Page"
-                    data-height="1500"
-                    data-layout-iframe-id="inline-CmNhKeH127nthMLD4Lw2"
-                    data-form-id="CmNhKeH127nthMLD4Lw2"
-                    title="Form For Home Page"
+                    src="form-wrapper.html"
+                    id="formWrapperIframe"
+                    style="width:100%;height:1500px;border:none;background:transparent;"
+                    allowtransparency="true"
                     scrolling="no"
+                    title="Contact Form"
                 ></iframe>
-                <script src="https://api.darkhorseva.net/js/form_embed.js"></script>
-            </div>
-
-            <!-- Custom thank you shown after form submits -->
-            <div id="formThankYou" style="display:none; text-align:center; padding: 80px 40px;">
-                <div style="font-size:48px; margin-bottom:20px;">✦</div>
-                <h3 style="font-size:28px; font-weight:700; color:var(--white); margin-bottom:16px;">You're all set!</h3>
-                <p style="color:var(--text-muted); font-size:16px; max-width:420px; margin:0 auto 32px;">I'll be in touch within 48 hours to talk through your project. Talk soon.</p>
-                <p style="color:var(--coral); font-weight:600; font-size:15px;">— Krys</p>
             </div>
         </div>
     </section>
@@ -1266,52 +1247,21 @@
             if (e.key === 'Escape') closeMenu();
         });
 
-        // Replace GHL iframe with custom thank you after form submits
-        const ghlIframe = document.getElementById('inline-CmNhKeH127nthMLD4Lw2');
-        const formWrap = document.getElementById('contactFormWrap');
-        const thankYou = document.getElementById('formThankYou');
-        let formLoaded = false;
-        let lastHeight = 0;
-        let submitted = false;
-
-        const showThankYou = () => {
-            if (submitted) return;
-            submitted = true;
-            // Hide the entire form wrap (iframe + anything GHL's embed script injected)
-            formWrap.style.display = 'none';
-            thankYou.style.display = 'block';
-            const navH = document.querySelector('nav').offsetHeight;
-            const top = thankYou.getBoundingClientRect().top + window.scrollY - navH - 16;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-        };
-
-        if (ghlIframe) {
-            // Method 1: iframe onload fires again when thank you page navigates
-            let iframeLoads = 0;
-            ghlIframe.addEventListener('load', function() {
-                iframeLoads++;
-                if (iframeLoads > 1) showThankYou();
-            });
-
-            // Method 2: poll iframe height every 500ms — GHL may update it after submit
-            setInterval(function() {
-                const h = parseInt(ghlIframe.style.height) || 0;
-                if (h > 200) { formLoaded = true; lastHeight = Math.max(lastHeight, h); }
-                if (formLoaded && h > 0 && h < lastHeight * 0.7) showThankYou();
-            }, 500);
-
-            // Method 3: postMessage catch-all
-            window.addEventListener('message', function(e) {
-                try {
-                    const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                    if (!d) return;
-                    const s = JSON.stringify(d).toLowerCase();
-                    if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you') || s.includes('success')) {
-                        showThankYou();
-                    }
-                } catch(err) {}
-            });
-        }
+        // Listen for form submission signal from form-wrapper.html
+        window.addEventListener('message', function(e) {
+            try {
+                const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+                if (!d || d.type !== 'ghlFormSubmitted') return;
+                const wrapperIframe = document.getElementById('formWrapperIframe');
+                if (wrapperIframe) {
+                    const newHeight = d.height || 400;
+                    wrapperIframe.style.height = newHeight + 'px';
+                    const navH = document.querySelector('nav').offsetHeight;
+                    const top = wrapperIframe.getBoundingClientRect().top + window.scrollY - navH - 16;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
+                }
+            } catch(err) {}
+        });
     </script>
 
 </body>

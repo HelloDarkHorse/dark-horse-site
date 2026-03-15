@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { background: transparent; width: 100%; overflow-x: hidden; }
+
+        #ghl-frame {
+            width: 100%;
+            height: 1500px;
+            border: none;
+            display: block;
+        }
+
+        #thank-you {
+            display: none;
+            text-align: center;
+            padding: 80px 40px;
+            font-family: 'Poppins', sans-serif;
+        }
+        #thank-you .icon { font-size: 48px; margin-bottom: 20px; color: #ffffff; }
+        #thank-you h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        #thank-you p {
+            color: rgba(255,255,255,0.65);
+            font-size: 16px;
+            max-width: 420px;
+            margin: 0 auto 32px;
+        }
+        #thank-you .sig {
+            color: #E05C6F;
+            font-weight: 600;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe
+        src="https://api.darkhorseva.net/widget/form/CmNhKeH127nthMLD4Lw2"
+        id="inline-CmNhKeH127nthMLD4Lw2"
+        style="width:100%;height:1500px;border:none;"
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-trigger-value=""
+        data-activation-type="alwaysActivated"
+        data-activation-value=""
+        data-deactivation-type="neverDeactivate"
+        data-deactivation-value=""
+        data-form-name="Form For Home Page"
+        data-height="1500"
+        data-layout-iframe-id="inline-CmNhKeH127nthMLD4Lw2"
+        data-form-id="CmNhKeH127nthMLD4Lw2"
+        title="Form For Home Page"
+        scrolling="no"
+    ></iframe>
+    <script src="https://api.darkhorseva.net/js/form_embed.js"></script>
+
+    <div id="thank-you">
+        <div class="icon">✦</div>
+        <h3>You're all set!</h3>
+        <p>I'll be in touch within 48 hours to talk through your project. Talk soon.</p>
+        <p class="sig">— Krys</p>
+    </div>
+
+    <script>
+        const ghlFrame  = document.getElementById('inline-CmNhKeH127nthMLD4Lw2');
+        const thankYou  = document.getElementById('thank-you');
+        let submitted   = false;
+        let iframeLoads = 0;
+        let lastHeight  = 0;
+        let formLoaded  = false;
+
+        const showThankYou = () => {
+            if (submitted) return;
+            submitted = true;
+            ghlFrame.style.display = 'none';
+            thankYou.style.display = 'block';
+            // Tell the parent page the form submitted so it can scroll/resize
+            window.parent.postMessage({ type: 'ghlFormSubmitted', height: 400 }, '*');
+        };
+
+        // Method 1: second load event = GHL navigated to its thank-you page
+        ghlFrame.addEventListener('load', function() {
+            iframeLoads++;
+            if (iframeLoads > 1) showThankYou();
+        });
+
+        // Method 2: height shrink — GHL sometimes collapses iframe after submit
+        setInterval(function() {
+            const h = parseInt(ghlFrame.style.height) || 0;
+            if (h > 200) { formLoaded = true; lastHeight = Math.max(lastHeight, h); }
+            if (formLoaded && h > 0 && h < lastHeight * 0.7) showThankYou();
+        }, 500);
+
+        // Method 3: postMessage scan
+        window.addEventListener('message', function(e) {
+            try {
+                const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+                if (!d) return;
+                const s = JSON.stringify(d).toLowerCase();
+                if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you') || s.includes('success')) {
+                    showThankYou();
+                }
+            } catch(err) {}
+        });
+    </script>
+
+</body>
+</html>
