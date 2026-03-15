@@ -59,6 +59,8 @@
         });
 
         // Method 2: postMessage — catch GHL height updates AND submission signals
+        let peakHeight = 0;
+        let heightStable = false;
         window.addEventListener('message', (e) => {
             try {
                 console.log('GHL msg:', JSON.stringify(e.data));
@@ -66,23 +68,48 @@
                 if (!d) return;
                 const s = JSON.stringify(d).toLowerCase();
 
-                // Submission detected
-                if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you') || s.includes('success')) {
+                // Submission keywords
+                if (s.includes('submitted') || s.includes('thankyou') || s.includes('thank_you')) {
                     showThankYou();
                     return;
                 }
 
-                // Height resize from GHL — resize inner iframe and tell parent
+                // Height message from GHL
                 const h = d.height || (d.data && d.data.height);
                 if (h && !submitted) {
                     const px = parseInt(h);
                     if (px > 100) {
+                        // If height drops significantly after stabilising = thank you page
+                        if (heightStable && px < peakHeight * 0.75) {
+                            showThankYou();
+                            return;
+                        }
                         ghlFrame.style.height = px + 'px';
                         window.parent.postMessage({ type: 'ghlResize', height: px }, '*');
+                        if (px >= peakHeight) {
+                            peakHeight = px;
+                            // Mark stable after height settles for 3s
+                            clearTimeout(window._stableTimer);
+                            window._stableTimer = setTimeout(() => { heightStable = true; }, 3000);
+                        }
                     }
                 }
             } catch(err) {}
         });
+
+        // Method 3: poll ghlFrame.style.height for a drop after it stabilises
+        let pollPeak = 0;
+        let pollStable = false;
+        setInterval(() => {
+            if (submitted) return;
+            const px = parseInt(ghlFrame.style.height) || 0;
+            if (px > pollPeak) { pollPeak = px; }
+            if (pollPeak > 200 && !pollStable) {
+                pollStable = true;
+                setTimeout(() => {}, 3000); // let it settle
+            }
+            if (pollStable && px > 0 && px < pollPeak * 0.75) showThankYou();
+        }, 500);
     </script>
 
 </body>
