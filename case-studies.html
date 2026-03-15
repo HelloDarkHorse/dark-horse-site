@@ -161,17 +161,40 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            background: var(--navy);
         }
+        /* centre glow */
         .page-hero::before {
             content: '';
             position: absolute;
-            top: -100px; left: 50%;
-            transform: translateX(-50%);
-            width: 600px; height: 600px;
-            background: radial-gradient(ellipse, rgba(224,92,111,0.12) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px; height: 500px;
+            background: radial-gradient(ellipse, rgba(19,28,52,0.95) 0%, rgba(11,17,32,0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        /* lightning bolt bg layer */
+        .page-hero-bolts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .page-hero-bolts svg {
+            position: absolute;
+            fill: #1a2540;
+        }
+        /* star accent */
+        .page-hero-star {
+            position: absolute;
+            bottom: 18px; right: 28px;
+            z-index: 2;
+            color: rgba(255,255,255,0.35);
+            font-size: 22px;
             pointer-events: none;
         }
-        .page-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+        .page-hero-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
         .section-label {
             font-size: 11px;
             font-weight: 600;
@@ -472,6 +495,24 @@
 
     <!-- PAGE HERO -->
     <div class="page-hero">
+        <!-- lightning bolt background -->
+        <div class="page-hero-bolts" aria-hidden="true">
+            <!-- top left cluster -->
+            <svg style="width:110px;top:6%;left:2%;transform:rotate(-10deg);opacity:0.9" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg style="width:70px;top:18%;left:8%;transform:rotate(-15deg);opacity:0.7" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg style="width:55px;top:3%;left:20%;transform:rotate(-6deg);opacity:0.6" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <!-- top right cluster -->
+            <svg style="width:120px;top:4%;right:3%;transform:rotate(12deg);opacity:0.9" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg style="width:75px;top:14%;right:12%;transform:rotate(8deg);opacity:0.7" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg style="width:55px;top:5%;right:22%;transform:rotate(5deg);opacity:0.6" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <!-- bottom left -->
+            <svg style="width:95px;bottom:8%;left:4%;transform:rotate(-18deg);opacity:0.8" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg style="width:50px;bottom:20%;left:14%;transform:rotate(-8deg);opacity:0.55" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <!-- bottom right -->
+            <svg style="width:80px;bottom:10%;right:5%;transform:rotate(16deg);opacity:0.8" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+            <svg style="width:45px;bottom:22%;right:16%;transform:rotate(10deg);opacity:0.55" viewBox="0 0 24 24"><path d="M13 2L4.09 12.96H11.07L10 22L19.91 11.04H12.93L13 2Z"/></svg>
+        </div>
+        <span class="page-hero-star">✦</span>
         <div class="page-hero-inner">
             <span class="section-label">Case Studies</span>
             <h1>Real Builds. <span class="accent">Real Results.</span></h1>
