@@ -352,18 +352,20 @@
 
         .about-avatar-wrap {
             width: 100%;
-            aspect-ratio: 1;
+            aspect-ratio: 3/4;
             border-radius: 20px;
-            background: linear-gradient(135deg, var(--navy-card) 0%, #0D1628 100%);
             border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            font-weight: 900;
-            color: var(--coral);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .about-avatar-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
         }
 
         .about-avatar-wrap::after {
@@ -433,8 +435,7 @@
             }
 
             .about-avatar-wrap {
-                max-width: 160px;
-                font-size: 56px;
+                max-width: 200px;
             }
         }
 
@@ -1213,7 +1214,9 @@
     <section class="about-section" id="about">
         <div class="about-inner">
             <div class="about-photo">
-                <div class="about-avatar-wrap">K</div>
+                <div class="about-avatar-wrap">
+                    <img src="https://assets.cdn.filesafe.space/6OJiXJpC8dGBkyQvQ10N/media/69b833d03e6072b354417ce5.jpg" alt="Krys Allen — Dark Horse GHL Implementation">
+                </div>
                 <div class="about-credentials">
                     <div class="credential">16+ years in marketing & web</div>
                     <div class="credential">GoHighLevel specialist</div>
@@ -1226,7 +1229,6 @@
                 <p>I've spent 16+ years in marketing, web design, email strategy, and e-commerce. When I went deep into GoHighLevel, I realized where all of that experience actually belonged — and I made a deliberate decision to go all in.</p>
                 <p>Dark Horse is my focused, intentional pivot into GHL implementation for marketing agencies. Not a side service. Not an add-on. <strong>This is the whole thing.</strong></p>
                 <p>You bring the client, I build the system — on time, under your brand, exactly as promised.</p>
-                <p class="team-bridge">Dark Horse is a small, focused team built around GHL delivery. Every project gets the right person on it — and you always have a single point of contact.</p>
             </div>
         </div>
     </section>
