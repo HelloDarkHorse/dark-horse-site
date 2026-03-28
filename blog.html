@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Dark Horse GHL Implementation</title>
+    <meta name="description" content="Practical insights on GoHighLevel implementation, agency systems, and getting the most out of your GHL setup. Written by a GHL specialist for marketing agencies.">
+    <meta property="og:title" content="Blog — Dark Horse GHL Implementation">
+    <meta property="og:description" content="Practical insights on GoHighLevel implementation, agency systems, and getting the most out of your GHL setup.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://assets.cdn.filesafe.space/6OJiXJpC8dGBkyQvQ10N/media/69b833d03e6072b354417ce5.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0B1120;
+            --navy-light: #0F1829;
+            --navy-card: #111D35;
+            --coral: #E05C6F;
+            --gold: #C9A84C;
+            --white: #FFFFFF;
+            --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 16px; font-weight: 900;
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--white); text-decoration: none;
+        }
+
+        .logo em { font-style: normal; color: var(--coral); }
+
+        .nav-links {
+            display: flex; align-items: center;
+            gap: 36px; list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            letter-spacing: 0.3px; transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+        .nav-cta {
+            background: var(--coral) !important;
+            color: white !important;
+            padding: 10px 22px; border-radius: 6px;
+            font-weight: 600 !important; font-size: 13px !important;
+            transition: opacity 0.2s !important;
+        }
+
+        .nav-cta:hover { opacity: 0.85; }
+
+        .nav-hamburger {
+            display: none; flex-direction: column;
+            gap: 5px; background: none; border: none;
+            cursor: pointer; padding: 4px;
+        }
+
+        .nav-hamburger span {
+            display: block; width: 24px; height: 2px;
+            background: var(--white); border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ── MOBILE MENU ── */
+        .mobile-menu {
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(11,17,32,0.98);
+            z-index: 99; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 32px;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu-spacer { height: 80px; }
+
+        .mobile-menu a {
+            color: var(--white); text-decoration: none;
+            font-size: 20px; font-weight: 600;
+        }
+
+        .mobile-cta {
+            background: var(--coral);
+            padding: 14px 32px; border-radius: 8px;
+        }
+
+        .mobile-backdrop {
+            display: none; position: fixed;
+            inset: 0; z-index: 98;
+        }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            padding: 160px 60px 80px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-hero .label {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 11px;
+            font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; padding: 6px 16px;
+            border-radius: 20px; margin-bottom: 24px;
+            border: 1px solid rgba(224,92,111,0.25);
+        }
+
+        .page-hero h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            font-weight: 800; line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .page-hero p {
+            font-size: 18px; color: var(--text-muted);
+            max-width: 580px; margin: 0 auto;
+        }
+
+        /* ── BLOG GRID ── */
+        .blog-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 60px 120px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .blog-card {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .blog-card:hover {
+            border-color: rgba(224,92,111,0.35);
+            transform: translateY(-4px);
+        }
+
+        .blog-card-body {
+            padding: 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 16px;
+            border: 1px solid rgba(224,92,111,0.2);
+            align-self: flex-start;
+        }
+
+        .blog-card h2 {
+            font-size: 19px; font-weight: 700;
+            line-height: 1.35; margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .blog-card p {
+            font-size: 14px; color: var(--text-muted);
+            line-height: 1.7; flex: 1; margin-bottom: 24px;
+        }
+
+        .blog-card-meta {
+            font-size: 12px; color: var(--text-muted);
+            margin-bottom: 20px; display: flex;
+            align-items: center; gap: 12px;
+        }
+
+        .blog-card-meta span { display: flex; align-items: center; gap: 5px; }
+
+        .blog-read-more {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--coral); font-size: 13px;
+            font-weight: 600; text-decoration: none;
+            transition: gap 0.2s;
+        }
+
+        .blog-read-more:hover { gap: 10px; }
+
+        /* ── CTA BANNER ── */
+        .blog-cta {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 60px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .blog-cta h2 {
+            font-size: 28px; font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .blog-cta p {
+            color: var(--text-muted); font-size: 16px;
+            margin-bottom: 28px;
+        }
+
+        .btn-coral {
+            display: inline-block;
+            background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-coral:hover { opacity: 0.85; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            padding: 48px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            font-size: 14px; font-weight: 900;
+            letter-spacing: 3px; text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .footer-logo em { font-style: normal; color: var(--coral); }
+
+        .footer-tagline {
+            font-size: 12px; color: var(--text-muted);
+        }
+
+        .footer-copy {
+            font-size: 11px; color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .footer-links {
+            display: flex; gap: 24px; flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-social-icons {
+            display: flex; gap: 16px; align-items: center;
+        }
+
+        .footer-social-icons a {
+            color: var(--text-muted); transition: color 0.2s;
+        }
+
+        .footer-social-icons a:hover { color: var(--white); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .page-hero { padding: 120px 24px 60px; }
+            .blog-section { padding: 60px 24px 80px; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .blog-cta { padding: 40px 24px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li><a href="services.html">Services &amp; Rates</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">Services &amp; Rates</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="label">From the Field</div>
+        <h1>GHL Insights for<br>Agency Owners</h1>
+        <p>Practical thoughts on GoHighLevel implementation, agency systems, and what actually moves the needle.</p>
+    </section>
+
+    <!-- BLOG GRID -->
+    <section class="blog-section">
+        <div class="blog-grid">
+
+            <!-- Post 1 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">GHL Systems</span>
+                    <div class="blog-card-meta">
+                        <span>March 2026</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>Why Your Agency's GHL Account Is Costing You Clients</h2>
+                    <p>Most agencies have a GHL account. Very few have a GHL account that actually works. Here is what neglected setups cost you — and what to do about it.</p>
+                    <a href="blog-ghl-costing-you-clients.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 2 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">Behind the Build</span>
+                    <div class="blog-card-meta">
+                        <span>March 2026</span>
+                        <span>· 6 min read</span>
+                    </div>
+                    <h2>What a Done-For-You GHL Implementation Actually Looks Like</h2>
+                    <p>Agency owners often ask what I actually do. Not the elevator pitch — the real work. Here is a straightforward look at what a full GHL buildout involves from start to finish.</p>
+                    <a href="blog-done-for-you-ghl.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 3 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">Agency Growth</span>
+                    <div class="blog-card-meta">
+                        <span>February 2026</span>
+                        <span>· 4 min read</span>
+                    </div>
+                    <h2>5 Signs Your Agency Needs a GHL Specialist (Not Another Freelancer)</h2>
+                    <p>There is a difference between someone who knows GHL and someone who specializes in it. If your agency is experiencing any of these five things, you need the latter.</p>
+                    <a href="blog-signs-you-need-ghl-specialist.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 4 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">GHL Systems</span>
+                    <div class="blog-card-meta">
+                        <span>February 2026</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>The Real Reason Your GHL Workflows Keep Breaking</h2>
+                    <p>GHL workflows do not break randomly. They break for specific, predictable reasons — and most of them come back to how the account was set up in the first place.</p>
+                    <a href="blog-why-ghl-workflows-break.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 5 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">Agency Operations</span>
+                    <div class="blog-card-meta">
+                        <span>January 2026</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>How to Onboard a New Client Into GHL the Right Way</h2>
+                    <p>A disorganized GHL onboarding creates problems that compound for months. Here is how to do it right — the first time.</p>
+                    <a href="blog-ghl-client-onboarding.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 6 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">Agency Growth</span>
+                    <div class="blog-card-meta">
+                        <span>January 2026</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>What White-Label GHL Support Means for Your Agency</h2>
+                    <p>White-label GHL support lets agencies deliver expert GHL management under their own brand. Here is what it means, how it works, and whether your agency needs it.</p>
+                    <a href="blog-white-label-ghl-support.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 7 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">GHL Systems</span>
+                    <div class="blog-card-meta">
+                        <span>December 2025</span>
+                        <span>· 4 min read</span>
+                    </div>
+                    <h2>GHL Snapshots Explained: What They Are and When to Use Them</h2>
+                    <p>GHL snapshots can save agencies hours of setup time — or create a mess if used carelessly. A clear explanation of what they are and how to use them right.</p>
+                    <a href="blog-ghl-snapshots-explained.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 8 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">GHL Systems</span>
+                    <div class="blog-card-meta">
+                        <span>December 2025</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>GHL Features Most Agencies Are Paying For But Not Using</h2>
+                    <p>Most agencies use a fraction of what GoHighLevel offers. Here are the underused features that could be generating real value in your account right now.</p>
+                    <a href="blog-ghl-unused-features.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 9 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">Agency Growth</span>
+                    <div class="blog-card-meta">
+                        <span>November 2025</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>How to Scale Your Agency Without Hiring More Staff</h2>
+                    <p>Most agencies hit a growth ceiling not because of leads, but because their operations cannot handle more clients. GHL is the most practical tool for breaking through it.</p>
+                    <a href="blog-scale-agency-without-hiring.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+            <!-- Post 10 -->
+            <article class="blog-card">
+                <div class="blog-card-body">
+                    <span class="blog-card-tag">Compliance</span>
+                    <div class="blog-card-meta">
+                        <span>November 2025</span>
+                        <span>· 5 min read</span>
+                    </div>
+                    <h2>A2P 10DLC Compliance in GHL: What Every Agency Needs to Know</h2>
+                    <p>If your GHL account sends text messages and you have not completed A2P 10DLC registration, your texts are likely being filtered. Here is what it is and how to fix it.</p>
+                    <a href="blog-a2p-compliance-ghl.html" class="blog-read-more">Read more →</a>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="blog-cta">
+            <h2>Ready to stop managing GHL yourself?</h2>
+            <p>Tell me about your agency and what you need built. I will handle the rest.</p>
+            <a href="index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileBackdrop = document.getElementById('mobileBackdrop');
+        navToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        mobileBackdrop.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+    </script>
+</body>
+</html>
