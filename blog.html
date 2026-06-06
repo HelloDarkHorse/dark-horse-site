@@ -319,6 +319,76 @@
             .blog-cta { padding: 40px 24px; }
             footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
         }
+    
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .nav-dropdown-toggle svg {
+            width: 11px;
+            height: 11px;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px;
+            padding: 8px 0;
+            min-width: 200px;
+            list-style: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10);
+            rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover {
+            color: var(--white);
+            background: rgba(255,255,255,0.05);
+        }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
     </style>
 </head>
 <body>
@@ -326,7 +396,13 @@
     <nav>
         <a href="index.html" class="logo">DARK <em>HORSE</em></a>
         <ul class="nav-links">
-            <li><a href="services.html">Services &amp; Rates</a></li>
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
             <li><a href="case-studies.html">Case Studies</a></li>
             <li><a href="blog.html" class="active">Blog</a></li>
             <li><a href="index.html#contact">Contact</a></li>
@@ -339,7 +415,8 @@
 
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-spacer"></div>
-        <a href="services.html">Services &amp; Rates</a>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
         <a href="case-studies.html">Case Studies</a>
         <a href="blog.html">Blog</a>
         <a href="index.html#contact">Contact</a>
