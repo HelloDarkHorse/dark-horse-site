@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Structure GHL Sub-Accounts for Agency Clients (The Right Way) — Dark Horse</title>
+    <meta name="description" content="Most agencies set up GHL sub-accounts the same way: a new client comes in, someone clicks "Create Sub-Account," fills in the business name, and starts building.">
+    <meta property="og:title" content="How to Structure GHL Sub-Accounts for Agency Clients (The Right Way)">
+    <meta property="og:description" content="Most agencies set up GHL sub-accounts the same way: a new client comes in, someone clicks &quot;Create Sub-Account,&quot; fills in the business name, and starts building.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-subaccount-structure.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-subaccount-structure.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        /* ── POST LAYOUT ── */
+        .post-wrapper {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 140px 40px 100px;
+        }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta {
+            font-size: 13px; color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800; line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .post-divider {
+            border: none; border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+
+        .post-body p { margin-bottom: 24px; }
+
+        .post-body h2 {
+            font-size: 22px; font-weight: 700;
+            margin: 40px 0 16px; color: var(--white);
+        }
+
+        .post-body h3 {
+            font-size: 17px; font-weight: 600;
+            margin: 28px 0 10px; color: var(--white);
+        }
+
+        .post-body ul, .post-body ol {
+            padding-left: 24px; margin-bottom: 24px;
+        }
+
+        .post-body li { margin-bottom: 10px; }
+
+        .post-body strong { color: var(--white); font-weight: 600; }
+
+        .post-body blockquote {
+            border-left: 3px solid var(--coral);
+            padding: 16px 24px;
+            background: var(--navy-card);
+            border-radius: 0 8px 8px 0;
+            margin: 32px 0;
+            font-size: 17px;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ── POST CTA ── */
+        .post-cta {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .nav-dropdown-toggle svg {
+            width: 11px;
+            height: 11px;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px;
+            padding: 12px 0 8px;
+            min-width: 200px;
+            list-style: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10);
+            rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover {
+            color: var(--white);
+            background: rgba(255,255,255,0.05);
+        }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">April 2026 &nbsp;·&nbsp; 6 min read</div>
+        <h1>How to Structure GHL Sub-Accounts for Agency Clients (The Right Way)</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>Most agencies set up GHL sub-accounts the same way: a new client comes in, someone clicks "Create Sub-Account," fills in the business name, and starts building. No naming convention. No folder structure. No template discipline. Six months in, you've got 40 sub-accounts that all look slightly different, nobody on your team can find anything, and onboarding a new client takes twice as long as it should because you're reinventing the wheel every time.</p>
+
+            <p>I've audited a lot of GHL agency accounts. The ones that run smoothly look very different from the ones that don't — and the difference almost always starts at the sub-account level.</p>
+
+            <h2>The Problem With "Just Wing It"</h2>
+
+            <p>When sub-accounts are created ad hoc, you end up with a few consistent problems.</p>
+
+            <p>First, no one can tell at a glance what's in an account. Is this the live account or the staging copy? Is this a client who's active or one who churned six months ago? Is this sub-account for location A or location B for that multi-location client?</p>
+
+            <p>Second, your snapshot strategy falls apart. If every account is built differently, you can't cleanly apply a snapshot to a new client without spending time stripping out the stuff that doesn't apply. The value of snapshots depends entirely on having a consistent base to apply them to.</p>
+
+            <p>Third, team access becomes a nightmare. When sub-accounts aren't structured with clear conventions, you're constantly managing who has access to what — usually reactively, when someone shouldn't have seen something they saw.</p>
+
+            <h2>Keep Sub-Account Names Simple — But Add Status When It Matters</h2>
+
+            <p>For most agencies, keeping sub-account names simple works fine — just the business name. "Morrison Legal." "Clearpath HVAC." "Sunrise Dental." Clean, easy to find, no overthinking it.</p>
+
+            <p>Where it breaks down is with inactive clients. When someone churns, their sub-account just sits there with a plain business name that looks exactly like an active client. Six months later, someone on your team logs into it by mistake, makes a change, or wastes 20 minutes trying to figure out why nothing is set up the way they expected.</p>
+
+            <p>The fix is simple: when a client goes inactive, rename the account to add the status and year. "Sunrise Dental — Inactive 2024." That's it. One small change that immediately tells everyone on your team what they're looking at without clicking into anything.</p>
+
+            <p>Don't delete inactive accounts. You may need them for reference, for offboarding, or if the client comes back. Renamed and left in place is the right call.</p>
+
+            <p>If you're managing a large number of accounts and want more visibility at a glance, some agencies also create a staging sub-account alongside each live account — named "Business Name — Staging" — so testing and building always happens separately from the live environment. More on that in the next section.</p>
+
+            <h2>Staging Accounts Are Non-Negotiable</h2>
+
+            <p>Every active client should have two sub-accounts: one live, one staging. Full stop.</p>
+
+            <p>I know that sounds like overhead. It isn't. The alternative is building directly in a live account — and eventually you will break something while a client is actively using it. That's not a matter of if. I've seen agencies get that 9pm call from a client whose lead follow-up sequence stopped firing because someone was "just making a quick change" in production. After you've made that mistake once, you build staging accounts for everyone.</p>
+
+            <p>The staging account is your sandbox. New automations get built there. Snapshots get tested there. Changes to live workflows get prototyped there. When it's working correctly in staging, you migrate it to live. This process adds maybe 20 minutes to most updates — and it eliminates the class of problems that come from breaking things in front of actual leads.</p>
+
+            <p>The naming convention I use keeps staging accounts clearly labeled, so they never get confused with the live account even in a long list.</p>
+
+            <h2>Snapshot Strategy Tied to Sub-Account Structure</h2>
+
+            <p>Snapshots are one of GHL's most powerful features for agencies. They let you replicate a working setup — workflows, pipelines, custom fields, calendars, funnels, the whole thing — into a new sub-account in minutes. But most agencies underuse them because their sub-account structure isn't consistent enough to support a clean snapshot strategy.</p>
+
+            <p>Here's how I think about it: snapshots work best when there's a baseline structure that every account shares, and industry-specific or service-specific layers that get added on top.</p>
+
+            <p>My standard setup is three snapshot types:</p>
+
+            <p><strong>Base snapshot:</strong> Applied to every new sub-account regardless of client type. Contains the universal things — my standard custom fields, the baseline pipeline stages, core notification workflows, calendar default settings, the intake form template. This is the stuff that every client needs and that would take 2 hours to set up manually each time.</p>
+
+            <p><strong>Vertical snapshots:</strong> One per industry category I work in — healthcare, legal, home services, coaching, whatever makes sense for your book of business. Each vertical snapshot layers on top of the base and adds the industry-specific stuff: the pipeline stages that match that industry's sales process, the FAQs for Conversation AI training, the common workflow triggers specific to that type of business.</p>
+
+            <p><strong>Service-tier snapshots:</strong> If you offer different service packages, this layer covers what's included in each tier. A client on a full implementation package gets different automations than a client on a maintenance retainer.</p>
+
+            <p>When a new client comes in, I apply base → vertical → service tier in that order. The account is 70–80% built before I've done any custom work. The remaining 20% is where the client's specific voice, offers, and process details get added.</p>
+
+            <p>For this system to work, every sub-account has to start from the same baseline. That's why the naming convention and staging account structure matter — they're not bureaucracy for its own sake. They're what makes the snapshot strategy reliable.</p>
+
+            <h2>Team Permissions and User Roles</h2>
+
+            <p>GHL's user role system has more nuance than most agencies use. At the sub-account level, you can control what team members can see and do with a fair amount of precision — but it requires thinking about it upfront rather than leaving everyone as an Admin because it's easier.</p>
+
+            <p>Here's how I typically structure roles within a sub-account:</p>
+
+            <p><strong>Agency Admin (your team):</strong> Full access. Used only by the implementation team. Client-facing team members do not get this role.</p>
+
+            <p><strong>Account Admin (client's operations lead or business owner):</strong> Access to everything except agency-level billing settings and sub-account creation. This person should be able to see all contacts, all workflows, all reports, and make changes if they need to — but they shouldn't be able to mess with the agency structure.</p>
+
+            <p><strong>Standard User (client's sales reps or front-line staff):</strong> Access to Conversations, Contacts, and Calendar. They can work leads, manage their own calendar, and respond to messages. They cannot see or touch workflows, funnels, or settings. This is the role that gets assigned to most of the client's team.</p>
+
+            <p><strong>Reporting-Only (client stakeholder who wants visibility but doesn't operate the system):</strong> Some clients have a partner or executive who wants to see dashboard data without being in the system. GHL doesn't have a true read-only role, so I typically create a Standard User account with explicit instructions about what they have access to and assign them only to the dashboard views they need.</p>
+
+            <p>The mistake I see most often: giving every client contact Admin access because it's the path of least resistance, and then later having to untangle a mess because someone on the client's team deleted a workflow or changed a pipeline stage without understanding what they were doing. Define the roles during onboarding. Brief the client on why you set it up that way. It takes 10 minutes and it prevents a whole category of support tickets.</p>
+
+            <h2>Inheriting a Messy GHL Account From Another Agency</h2>
+
+            <p>This one deserves its own section because it's a situation more agencies are landing in as the platform matures. A client comes to you after a bad experience with a previous agency. Their GHL account exists. It's a disaster. Your job is to clean it up and take it over — without blowing up the parts that are actually working.</p>
+
+            <p>Here's the order of operations I follow:</p>
+
+            <p><strong>1. Audit before you touch anything.</strong> Before changing a single thing, do a full audit. Document every workflow (active and inactive), every pipeline and its stages, every funnel and form, every custom field, every integration, every user and their role. Screenshot or export what you can. You need a map of the existing territory before you start clearing brush, because some things that look unused are actually doing something important.</p>
+
+            <p><strong>2. Identify what's live and working.</strong> Not everything in a messy account is broken. Some things are running fine and have active leads or customers attached to them. Tag these clearly. These are the things you touch last, and only after you've built replacements.</p>
+
+            <p><strong>3. Deactivate, don't delete.</strong> When you find broken or redundant workflows, deactivate them first. Leave them sitting there in inactive status for at least 30 days before deleting. This gives you a buffer to discover that something you thought was abandoned was actually connected to something else.</p>
+
+            <p><strong>4. Implement your naming convention going forward.</strong> You can't retroactively rename everything on day one without creating confusion. Instead, apply your naming convention to everything new you create, and rename existing items as you audit and touch them. Over time, the account starts to look like yours.</p>
+
+            <p><strong>5. Create a staging account and make it your workspace.</strong> Even if the client's live account is the mess you're cleaning up, create a staging counterpart and do all your new builds there. This limits your blast radius while you're working in an environment you don't fully understand yet.</p>
+
+            <p>Inheriting a messy account is genuinely hard work. It's also a legitimate service offering — clients who've had bad GHL experiences are often willing to pay specifically for cleanup and restructuring. If you do this work well, you also earn significant trust, because you came in after someone else failed and you made it right.</p>
+
+            <h2>The Payoff</h2>
+
+            <p>When your sub-account structure is clean, everything downstream gets easier. Onboarding is faster. Your team spends less time orienting themselves. Snapshots apply cleanly. Access management is simple. And when something breaks — and something always eventually breaks — you know exactly where to look.</p>
+
+            <p>Structure is not glamorous. But in GHL, it's the difference between an agency that scales and one that drowns in its own client accounts.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Ready to get your GHL account structured properly?</h2>
+            <p>I work with agencies to clean up existing GHL setups and build systems that hold up as you grow.</p>
+            <a href="https://www.hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>

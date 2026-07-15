@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHL Forms vs. Surveys vs. Funnels — When to Use Which and Why It Matters for Lead Quality — Dark Horse</title>
+    <meta name="description" content="GHL gives you three ways to collect lead information: forms, surveys, and funnels. Agencies regularly use the wrong one — and it costs them lead quality.">
+    <meta property="og:title" content="GHL Forms vs. Surveys vs. Funnels — When to Use Which and Why It Matters for Lead Quality">
+    <meta property="og:description" content="GHL gives you three ways to collect lead information: forms, surveys, and funnels. Agencies regularly use the wrong one — and it costs them lead quality.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-forms-surveys-funnels.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-forms-surveys-funnels.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        .post-wrapper { max-width: 740px; margin: 0 auto; padding: 140px 40px 100px; }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+
+        h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; line-height: 1.15; margin-bottom: 32px; }
+
+        .post-divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+        .post-body p { margin-bottom: 24px; }
+        .post-body h2 { font-size: 22px; font-weight: 700; margin: 40px 0 16px; color: var(--white); }
+        .post-body h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; color: var(--white); }
+        .post-body ul, .post-body ol { padding-left: 24px; margin-bottom: 24px; }
+        .post-body li { margin-bottom: 10px; }
+        .post-body strong { color: var(--white); font-weight: 600; }
+        .post-body blockquote {
+            border-left: 3px solid var(--coral); padding: 16px 24px;
+            background: var(--navy-card); border-radius: 0 8px 8px 0;
+            margin: 32px 0; font-size: 17px; font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .post-cta {
+            background: var(--navy-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 48px 40px;
+            text-align: center; margin-top: 60px;
+        }
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .nav-dropdown-toggle svg { width: 11px; height: 11px; transition: transform 0.2s; flex-shrink: 0; }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px; padding: 12px 0 8px;
+            min-width: 200px; list-style: none;
+            opacity: 0; pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45); z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: ''; position: absolute; top: -5px; left: 50%;
+            transform: translateX(-50%); width: 10px; height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10); rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+        .nav-dropdown-menu li a {
+            display: block; padding: 10px 20px; font-size: 13px;
+            color: var(--text-muted); text-decoration: none; font-weight: 500;
+            transition: color 0.15s, background 0.15s; white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">May 2026 &nbsp;·&nbsp; 6 min read</div>
+        <h1>GHL Forms vs. Surveys vs. Funnels — When to Use Which and Why It Matters for Lead Quality</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>GHL gives you three ways to collect lead information: forms, surveys, and funnels. Agencies regularly use the wrong one, or use one of them for everything, and then wonder why their lead quality is inconsistent or their contact records are incomplete.</p>
+
+            <p>This isn't a deep-dive on how to build each one. It's about understanding what each tool is actually for — because choosing the right one changes the quality of the leads you collect and how useful that data is downstream.</p>
+
+            <h2>What GHL Forms Are For</h2>
+
+            <p>Forms in GHL are the simplest tool. They collect basic information: name, email, phone, maybe one or two qualifying questions. They're fast to fill out, easy to embed anywhere, and they create a contact record the moment someone submits.</p>
+
+            <p>Use forms when the barrier to entry should be low. Facebook ad lead capture. Website contact forms. Newsletter signups. Anything where you're trying to get as many leads into the top of your funnel as possible and you'll qualify them later.</p>
+
+            <p><strong>How forms connect to GHL automations:</strong> Form submissions trigger workflow automations directly via the "Form Submitted" trigger. You can specify which form triggered the workflow, so you can have different automations fire depending on which form was submitted. A form submission also creates or updates a contact record immediately, which means you can immediately enroll that contact in a pipeline and assign them to a rep.</p>
+
+            <p>The tradeoff: because forms are quick to fill out, they attract more volume — including people who aren't actually qualified or aren't serious. That's fine if your follow-up process is designed to filter quickly. It's a problem if low-quality leads are clogging your client's pipeline or wasting their sales team's time.</p>
+
+            <p>Don't use forms when you need pre-qualification. If a client only works with a specific type of customer (budget threshold, geography, business type), a plain form will fill their pipeline with contacts they can't serve.</p>
+
+            <h2>What GHL Surveys Are For</h2>
+
+            <p>Surveys are for pre-qualification. They let you ask multiple questions, collect longer-form answers, and get meaningful information about who the lead is before they ever talk to your client.</p>
+
+            <p>Use surveys when lead quality matters more than lead volume. High-ticket services. Clients who have limited capacity and need to be selective. Any situation where a bad-fit lead wastes significant time.</p>
+
+            <p>A good pre-qualification survey asks: Are you the right type of person? Do you have the budget? What's your timeline? What's your main problem? With that information in a contact record, your client's sales team goes into every call with real context — instead of starting from zero.</p>
+
+            <p><strong>How surveys connect to GHL automations:</strong> Like forms, surveys have a "Survey Submitted" trigger in workflows. But surveys offer something forms don't: you can use survey field values as conditions inside your workflows. If a respondent selects "$5,000+" for budget, you can route them into a high-priority pipeline and assign them to your best closer. If they select "under $1,000," you might route them to a lower-touch follow-up sequence or a self-serve resource instead.</p>
+
+            <p>This is more powerful than it sounds. Instead of all leads getting the same follow-up sequence, your automation is doing a first pass of qualification automatically — before any human has to touch the contact.</p>
+
+            <p><strong>Conditional logic walkthrough:</strong> Say you're building a survey for a coaching client who only works with business owners (not employees). Question 1: "Which best describes you?" with options including "Business owner / founder" and "Employee / other." If someone selects anything other than "Business owner / founder," the next question set shifts — maybe they see a message like "Our program is designed for business owners. Here's a resource that might help..." and the survey ends without routing them into the sales pipeline. The business owner path continues with budget, timeline, and goal questions.</p>
+
+            <p>In GHL, you set this up using the conditional logic settings on each question — you can show or hide subsequent questions based on previous answers, and you can use those same answer values as conditions in your workflow automation after submission.</p>
+
+            <p>The tradeoff: surveys have friction. Fewer people will complete them. That's usually the point — you're filtering the pipeline, not just filling it. For a client who gets 200 leads a month but can only serve 15, that friction is a feature.</p>
+
+            <h2>What GHL Funnels Are For</h2>
+
+            <p>Funnels are a different category. Where forms and surveys are about data collection, funnels are about the full conversion experience — landing page, offer, opt-in, thank you page, potentially a multi-step sequence. GHL's funnel builder is a page builder that includes form elements, not just a form tool.</p>
+
+            <p>Use funnels when the context around the form matters. If your client is running a paid ad campaign to a cold audience, they need a dedicated landing page that explains the offer and builds enough trust to get the opt-in. A standalone form embedded on a website doesn't do that. A funnel does.</p>
+
+            <p>Funnels also let you control the post-submission experience — redirect to a specific thank you page, immediately present an upsell or a calendar booking link, run a multi-step sequence. If you're building a lead magnet delivery, a webinar registration, or a quote request flow, a funnel gives you that full journey in one place.</p>
+
+            <p><strong>How funnels connect to GHL automations:</strong> Funnels can contain forms or surveys, so the automation triggers (Form Submitted, Survey Submitted) work the same way inside a funnel. The additional power with funnels is the order bump and upsell page flow — you can trigger different automations based on whether someone accepted an order bump, which lets you segment buyers from non-buyers immediately after the initial conversion.</p>
+
+            <p>The tradeoff: funnels take longer to build than forms or surveys. They're overkill for simple use cases. Don't build a five-step funnel when a form on the website will do the job.</p>
+
+            <h2>When the Wrong Tool Was Used — Real Scenarios</h2>
+
+            <p><strong>Scenario 1: High-ticket client using a basic form.</strong><br>
+            A business coach offering $5,000 programs was using a simple 3-field form (name, email, phone) as their primary lead capture on all their Facebook ads. They were getting 60 leads a month and converting 2 or 3. Their sales calls were mostly spent weeding out people who had no budget or weren't serious, and the volume was exhausting the team.</p>
+
+            <p>We replaced the form with a survey — 6 questions covering business type, revenue, timeline, biggest challenge, and budget range. Lead volume dropped from 60 to about 25 per month. Conversion went from 2–3 to 8–10 per month. The leads that came through were pre-qualified and the sales team knew exactly who they were talking to before the call started. The client's close rate nearly tripled.</p>
+
+            <p><strong>Scenario 2: Simple service using an over-engineered funnel.</strong><br>
+            An HVAC company wanted to collect quote requests from their website. Someone on the agency team decided to build a full funnel — landing page, multi-step form, thank you page with an upsell for a maintenance contract. It took a week to build, the client's team couldn't maintain it, and the page load time was slow enough that mobile users were bouncing.</p>
+
+            <p>An embedded 4-field form on their existing website — name, phone, service type, zip code — would have done the same job in two hours and performed better. The funnel added complexity without adding value because the traffic was warm (people already on the website looking for HVAC service). They didn't need convincing. They needed a simple way to request a quote.</p>
+
+            <p><strong>Scenario 3: Paid traffic to a plain form.</strong><br>
+            A real estate agency was running Facebook ads to a lead form embedded on their homepage. Cold traffic landing on a homepage with no dedicated context, no offer headline, no trust signals — just a form. The opt-in rate was around 3%.</p>
+
+            <p>We built a simple two-page funnel: a landing page specific to the ad offer (a free home valuation), followed by a short survey (3 questions to qualify the lead by timeline and property type), followed by a confirmation page with a calendar booking link. Opt-in rate went to 18%. The survey filtered out low-intent leads. The calendar link on the confirmation page let motivated leads book immediately.</p>
+
+            <h2>Combining Tools — Funnel Containing a Survey</h2>
+
+            <p>The most effective lead capture setups I build use a funnel as the container and a survey as the primary collection tool inside it.</p>
+
+            <p>The funnel handles the page experience — the headline, the credibility markers, the visual design that turns cold traffic into warm leads. Once someone is ready to opt in, they hit a multi-step survey embedded inside the funnel page. The survey collects qualification data, and conditional logic routes respondents based on their answers. High-fit leads get routed to a calendar booking. Low-fit leads get routed to a nurture sequence or a self-serve resource.</p>
+
+            <p>This structure does three things at once: it converts cold traffic (the funnel), qualifies leads before they hit the pipeline (the survey), and segments them automatically based on their answers (the workflow automation). You get volume from the funnel and quality from the survey.</p>
+
+            <p>The key when combining tools: make sure the automation triggers are wired correctly. The "Survey Submitted" trigger fires when the survey is completed — but if someone fills out only part of a multi-page survey and drops off, you won't get a trigger. Test all paths, including incomplete submissions, before going live.</p>
+
+            <h2>The Quick Decision Framework</h2>
+
+            <p><strong>Highest volume, simplest collection, low barrier:</strong> Form.</p>
+
+            <p><strong>Pre-qualification needed, lead quality over quantity:</strong> Survey.</p>
+
+            <p><strong>Paid traffic, cold audience, multi-step conversion experience:</strong> Funnel (with a form or survey inside it).</p>
+
+            <p><strong>High-ticket offer + paid traffic + quality needed:</strong> Funnel containing a survey with conditional logic.</p>
+
+            <p>The question is always what you're trying to accomplish at that specific stage of the lead journey — and choosing the tool that fits that job instead of defaulting to whatever was used last time.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Getting the wrong types of leads, or leads without enough information to work with?</h2>
+            <p>That's usually a tool selection problem. I help agencies set up GHL the right way for their clients' actual sales process.</p>
+            <a href="https://www.hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>

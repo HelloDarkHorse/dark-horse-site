@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use GHL's Conversation AI Without Making Your Clients Look Bad — Dark Horse</title>
+    <meta name="description" content="GHL's Conversation AI can be genuinely useful. When it doesn't work well, it sends a client's lead a confident, completely wrong answer. Here's how to set it up safely.">
+    <meta property="og:title" content="How to Use GHL's Conversation AI Without Making Your Clients Look Bad">
+    <meta property="og:description" content="GHL's Conversation AI can be genuinely useful. When it doesn't work well, it sends a client's lead a confident, completely wrong answer. Here's how to set it up safely.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-conversation-ai.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-conversation-ai.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        .post-wrapper { max-width: 740px; margin: 0 auto; padding: 140px 40px 100px; }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+
+        h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; line-height: 1.15; margin-bottom: 32px; }
+
+        .post-divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+        .post-body p { margin-bottom: 24px; }
+        .post-body h2 { font-size: 22px; font-weight: 700; margin: 40px 0 16px; color: var(--white); }
+        .post-body h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; color: var(--white); }
+        .post-body ul, .post-body ol { padding-left: 24px; margin-bottom: 24px; }
+        .post-body li { margin-bottom: 10px; }
+        .post-body strong { color: var(--white); font-weight: 600; }
+        .post-body blockquote {
+            border-left: 3px solid var(--coral); padding: 16px 24px;
+            background: var(--navy-card); border-radius: 0 8px 8px 0;
+            margin: 32px 0; font-size: 17px; font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .post-cta {
+            background: var(--navy-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 48px 40px;
+            text-align: center; margin-top: 60px;
+        }
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .nav-dropdown-toggle svg { width: 11px; height: 11px; transition: transform 0.2s; flex-shrink: 0; }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px; padding: 12px 0 8px;
+            min-width: 200px; list-style: none;
+            opacity: 0; pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45); z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: ''; position: absolute; top: -5px; left: 50%;
+            transform: translateX(-50%); width: 10px; height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10); rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+        .nav-dropdown-menu li a {
+            display: block; padding: 10px 20px; font-size: 13px;
+            color: var(--text-muted); text-decoration: none; font-weight: 500;
+            transition: color 0.15s, background 0.15s; white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">June 2026 &nbsp;·&nbsp; 6 min read</div>
+        <h1>How to Use GHL's Conversation AI Without Making Your Clients Look Bad</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>GHL's Conversation AI can be genuinely useful. It can handle initial lead responses at 2am when no one on the team is working, answer common questions, qualify leads, and hand off to a human at the right moment. When it works well, it feels like a superpower.</p>
+
+            <p>When it doesn't work well, it sends a client's lead a confident, completely wrong answer about their pricing. Or it replies to a complaint with a cheerful follow-up message. Or it keeps responding after the sales rep has already taken over the conversation, and now the lead is getting two different messages.</p>
+
+            <p>I've seen all of these happen. The agencies that avoid these problems aren't just lucky — they've put guardrails in place before they turned the thing on.</p>
+
+            <h2>Writing Good Bot Training Content</h2>
+
+            <p>The bot training section is where most implementations go wrong. Agencies either skip it entirely, paste in a generic service description, or copy the client's "About" page — none of which actually prepares the AI to have useful conversations.</p>
+
+            <p>Here's what good training content includes:</p>
+
+            <p><strong>The FAQs the team actually fields every day.</strong> Not the FAQ page on the website. Sit with the client's sales team for 30 minutes and ask: what do leads ask in the first conversation, every single time? That's what goes in the training. "How much does it cost?" "How long does it take?" "Do you serve my area?" "What makes you different from [competitor]?" Write those questions out exactly as leads ask them, and write the answer the way the client wants it delivered.</p>
+
+            <p><strong>Pricing guidance written carefully.</strong> Pricing is the most common source of AI errors. If the client has exact pricing, include it exactly. If pricing varies, the training content should say something like: "Our services start at $X. Exact pricing depends on [factors]. To get a specific number for your situation, the next step is a quick call with our team." Do not let the AI guess at pricing or qualify it vaguely. Specific and honest beats vague and technically-safe.</p>
+
+            <p><strong>Hard stops and non-answers.</strong> Explicitly list topics the AI should not answer. Legal questions. Medical advice. Comparisons to specific competitors by name. Any topic where a wrong answer could cause real damage. The training should include language like: "If asked about [topic], respond: 'That's a great question — I want to make sure you get the right answer. Let me connect you with someone from our team directly.'"</p>
+
+            <p><strong>Tone and voice.</strong> The AI mirrors the tone of the training content. If the training is stiff and corporate, the AI sounds stiff and corporate. Write the training content in the client's actual voice — the way they talk on calls, not the way they write on their website. Short sentences. Conversational. Direct.</p>
+
+            <p><strong>What to do with unusual requests.</strong> Include a general fallback in the training: "If you're unsure how to respond or the question hasn't been covered, don't guess. Say: 'I want to make sure I get this right for you. Let me get someone from the team to follow up with you directly within [timeframe].'" This prevents confident wrong answers more than any other single piece of training content.</p>
+
+            <h2>Testing the AI Before Going Live</h2>
+
+            <p>Most agencies test by sending one or two messages and seeing if the AI responds. That's not testing — that's checking that it's turned on.</p>
+
+            <p>Here's what I actually test before any Conversation AI deployment goes live:</p>
+
+            <p><strong>Script the common scenarios.</strong> Write out 8–10 conversations the way a real lead would have them. Include the easy ones (basic pricing question, booking a call) and the edge cases (a complaint, a question about a competitor, someone who says "I'm not interested anymore," someone who asks something completely off-topic).</p>
+
+            <p><strong>Test each scenario manually.</strong> Go into the GHL Conversations window and act as a lead. Have each scripted conversation. Screenshot or document the AI's responses. You're looking for: accuracy (did it get the facts right?), tone (does it sound right for the client?), escalation (did it try to handle something it shouldn't have?), and handoff (did it offer to connect a human when appropriate?).</p>
+
+            <p><strong>Test the handoff trigger specifically.</strong> Send a message that should trigger a human handoff — a pricing question that goes beyond what the training covers, a complaint, a request to speak with someone. Confirm that the AI routes correctly and that the notification reaches the right person on the team.</p>
+
+            <p><strong>Test the AI's behavior when a human is assigned.</strong> Assign the test conversation to a rep. Send another message. The AI should stop responding. If it doesn't — if it continues to respond alongside the human rep — you have an overlap problem that will confuse leads in a live environment.</p>
+
+            <p><strong>Test on mobile.</strong> If your client's leads primarily come from mobile, have the conversations from a mobile device. The SMS experience can behave differently than the web-based chat, and you want to catch any formatting or delivery issues before they hit a real lead.</p>
+
+            <p>This testing pass typically takes 45–60 minutes. Document what you tested and what the responses were. If something needs to be corrected, go back into training, update it, and retest that specific scenario. When every scenario produces an acceptable response, the AI is ready to go live.</p>
+
+            <h2>Configuring the Human Handoff</h2>
+
+            <p>The handoff from AI to human is the most technically critical part of the whole setup — and the part that most agencies leave partially configured.</p>
+
+            <p>In GHL, the Conversation AI settings let you configure:</p>
+
+            <p><strong>Auto-assign and stop:</strong> When a conversation is assigned to a user in GHL, you can configure the AI to automatically stop responding to that conversation. Turn this on. This is the single most important setting for preventing the overlap problem (AI and human both responding to the same lead).</p>
+
+            <p><strong>Keyword-based handoff triggers:</strong> You can configure the AI to tag a conversation or notify a team member when certain keywords appear — complaint language ("frustrated," "unhappy," "this isn't working"), urgency signals ("urgent," "need this today"), or explicit requests ("talk to someone," "real person," "call me"). These tags can then trigger a notification workflow that alerts the appropriate rep.</p>
+
+            <p><strong>Sentiment-based escalation:</strong> If the client has the higher-tier Conversation AI plan, there's sentiment detection that can flag negative conversations automatically. Use it. A lead who's moving from curious to annoyed needs a human faster than your AI will recognize without this setting.</p>
+
+            <p><strong>Out-of-hours handling:</strong> Configure a message variation for conversations that start outside business hours. The AI can respond with something like: "Our team is available [hours]. I'll make sure someone follows up with you first thing." This sets accurate expectations instead of implying instant human availability at 11pm.</p>
+
+            <p>Explicitly define what triggers a handoff in the client's specific context. Write it out as a rule: "If a lead asks about pricing beyond the starting range, the AI should offer a call instead of answering." "If the word 'complaint' or 'problem' appears, tag the conversation for immediate human review." These rules need to be in the AI training content AND in the workflow triggers — both layers.</p>
+
+            <h2>When the AI Makes a Mistake — Damage Control</h2>
+
+            <p>It will happen. Even a well-configured AI will eventually say something wrong or handle a situation badly. Here's how to deal with it without compounding the problem.</p>
+
+            <p><strong>Catch it early.</strong> The review process I described above (read conversations in the first two weeks) exists specifically for this. The sooner you catch a bad AI response, the smaller the damage. A wrong answer that gets caught the same day and corrected is a minor incident. A wrong answer that runs for two weeks before anyone noticed is a client relationship problem.</p>
+
+            <p><strong>Correct it transparently.</strong> When the AI has said something wrong to a lead, a human needs to follow up — that day if possible. "I want to follow up on the message you received earlier — I noticed the information about [X] wasn't accurate, and I want to make sure you have the right answer." Don't pretend it didn't happen. Don't let it go unfollowed. Most leads respond well to a quick, honest correction. What they don't forgive is silence.</p>
+
+            <p><strong>Fix the training, then document the fix.</strong> After every AI error, go into the training section and update the content that produced the error. Add clarity, add a guardrail, or add an explicit "if asked about X, say Y" instruction. Then log what happened and what you changed. If you're managing multiple clients with Conversation AI, this log becomes your quality-control record — and it's what you point to when a client asks how you're improving the system.</p>
+
+            <p><strong>Recalibrate the client's expectations if needed.</strong> If the AI makes a mistake that affects a real lead or client relationship, use it as an opportunity to reset expectations clearly: this tool is a first-response layer, not an infallible assistant. Review what's being covered and not covered in training. Sometimes an error reveals that the training scope was too broad — the AI was being asked to answer questions it shouldn't have been handling at all.</p>
+
+            <h2>Be Honest With Clients About What It Can and Can't Do</h2>
+
+            <p>The last guardrail isn't technical. It's expectation-setting.</p>
+
+            <p>Conversation AI is not a replacement for a sales team. It's a first-response layer that handles routine interactions and keeps leads warm until a human is available. Clients who understand this use it well. Clients who think it's going to handle their entire sales process get disappointed — or worse, let it run unsupervised and damage their reputation with leads.</p>
+
+            <p>Set the expectation clearly at the start: this tool handles the initial response and qualifies leads. A real person closes the deal. That framing helps clients stay appropriately involved instead of treating it as a "set and forget" feature.</p>
+
+            <p>And be honest about what it's not good at: nuanced objection handling, complex pricing conversations, situations where empathy is required. Those still need humans. The AI's job is to make sure leads don't fall through the cracks at 2am — not to replace the skill of a good sales rep.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Considering Conversation AI for your clients but not sure how to set it up safely?</h2>
+            <p>I help agencies implement GHL features in ways that actually work — and don't create problems down the line.</p>
+            <a href="https://www.hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>
