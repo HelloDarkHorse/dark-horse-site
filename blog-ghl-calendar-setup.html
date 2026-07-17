@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Up GHL Calendars the Right Way for Agency Clients — Dark Horse</title>
+    <meta name="description" content="Most GHL calendar problems I inherit aren't random. They're predictable — and almost always traces back to someone picking the wrong calendar type at setup and never fixing it.">
+    <meta property="og:title" content="How to Set Up GHL Calendars the Right Way for Agency Clients">
+    <meta property="og:description" content="Most GHL calendar problems I inherit aren't random. They're predictable — and almost always traces back to someone picking the wrong calendar type at setup and never fixing it.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-calendar-setup.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://assets.cdn.filesafe.space/6OJiXJpC8dGBkyQvQ10N/media/69b833d03e6072b354417ce5.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-calendar-setup.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        /* ── POST LAYOUT ── */
+        .post-wrapper {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 140px 40px 100px;
+        }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta {
+            font-size: 13px; color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800; line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .post-divider {
+            border: none; border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+
+        .post-body p { margin-bottom: 24px; }
+
+        .post-body h2 {
+            font-size: 22px; font-weight: 700;
+            margin: 40px 0 16px; color: var(--white);
+        }
+
+        .post-body h3 {
+            font-size: 17px; font-weight: 600;
+            margin: 28px 0 10px; color: var(--white);
+        }
+
+        .post-body ul, .post-body ol {
+            padding-left: 24px; margin-bottom: 24px;
+        }
+
+        .post-body li { margin-bottom: 10px; }
+
+        .post-body strong { color: var(--white); font-weight: 600; }
+
+        .post-body blockquote {
+            border-left: 3px solid var(--coral);
+            padding: 16px 24px;
+            background: var(--navy-card);
+            border-radius: 0 8px 8px 0;
+            margin: 32px 0;
+            font-size: 17px;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ── POST CTA ── */
+        .post-cta {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .nav-dropdown-toggle svg {
+            width: 11px;
+            height: 11px;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px;
+            padding: 12px 0 8px;
+            min-width: 200px;
+            list-style: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10);
+            rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover {
+            color: var(--white);
+            background: rgba(255,255,255,0.05);
+        }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">June 2026 &nbsp;·&nbsp; 8 min read</div>
+        <h1>How to Set Up GHL Calendars the Right Way for Agency Clients</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>Most GHL calendar problems I inherit aren't random. They're predictable. Double-bookings, missed confirmations, reps getting slammed while others sit idle — almost always traces back to someone picking the wrong calendar type at setup and never fixing it. This post is going to fix that.</p>
+
+            <p>Here's exactly how I set up calendars for agency clients, which type I use and when, and the mistakes I see constantly that I want you to stop making.</p>
+
+            <h2>The Three Calendar Types and What They're Actually For</h2>
+
+            <p>GHL gives you three calendar types: Simple, Round Robin, and Collective. They're not interchangeable, and picking wrong creates headaches that feel like workflow bugs but are really just config issues.</p>
+
+            <p><strong>Simple Calendar</strong> is a single-seat calendar. One person, one booking link. This is what I use for solopreneurs, single consultants, or situations where a specific person needs to be booked — not just "someone on the team." If your client is a one-woman coaching practice, she gets a Simple Calendar. Done.</p>
+
+            <p><strong>Round Robin</strong> is for teams where any available rep can take the call. A law firm with four intake coordinators. A real estate brokerage where leads get routed to whoever's free. Round Robin distributes bookings automatically based on availability and — if you turn it on — weighted priority. This is the calendar type most agencies should be using for sales teams and lead intake, and it's the one most people set up wrong.</p>
+
+            <p><strong>Collective Calendar</strong> is for meetings that require multiple people to attend simultaneously. Think panel interviews, strategy sessions with an account manager plus a technical lead, any scenario where the booking only works if everyone is available at the same time. GHL checks all connected users' availability before showing an open slot.</p>
+
+            <p>If you're not sure which one to use: ask your client how many people could realistically take this appointment, and whether all of them need to be there or just one. That answer tells you everything.</p>
+
+            <h2>Calendar Groups: Why Every Client With Multiple Booking Types Needs One</h2>
+
+            <p>Before you touch calendar types, you need to understand calendar groups — and most agencies skip this entirely.</p>
+
+            <p>A calendar group is a container that holds multiple calendars and presents them on a single booking page. Instead of sharing three separate links (one for a 15-minute discovery call, one for a 60-minute strategy session, one for an onboarding call), your client shares one group URL. The prospect picks the meeting type they need and books directly.</p>
+
+            <p>Here's why this matters operationally: when you don't use groups, tracking gets fragmented. Every calendar has its own link, its own workflow triggers, and its own confirmation flow. You end up with duplicate automation logic, inconsistent confirmation emails across booking types, and clients who can never remember which link to share for which type of call.</p>
+
+            <p>With a calendar group, you build the booking experience once. Set the group landing page, assign calendars to it, and that's the URL that goes everywhere — in the email signature, on the website, in the follow-up sequence.</p>
+
+            <p>I set up a calendar group for every client who has more than one booking type. Even if they only have two calendars right now, the group gives you a clean place to add more later without rebuilding the workflow infrastructure.</p>
+
+            <p>To create one: in GHL, go to Calendars &gt; Calendar Groups &gt; Create Group. Give it a name your client will recognize, assign the relevant calendars, and configure the group display settings. You can set it to show all calendars at once or prompt the contact to answer a question first to filter which calendar they're directed to — useful if the booking type depends on the contact's situation.</p>
+
+            <h2>How I Configure Round Robin Calendars for Agency Clients</h2>
+
+            <p>Round Robin is where I spend most of my calendar setup time because there's more to get right.</p>
+
+            <p>First, make sure every team member's calendar is actually connected. Not just added to the system — connected. There's a difference. In GHL, each user needs to have their Google or Outlook calendar synced under their profile, and that sync needs to be verified. I've taken over sub-accounts where a rep had been "on" a Round Robin calendar for months but their personal calendar was disconnected, so they were receiving bookings into a void. Their availability never blocked off. Double-bookings everywhere.</p>
+
+            <p>Second, set buffer times. I always add at least 15 minutes before and after appointments. Clients almost never think to ask for this and then wonder why their team feels frantic. Build it in at setup.</p>
+
+            <p>Third, decide on your distribution method. GHL lets you distribute by availability (true round robin) or by priority weighting. This is the setting most people gloss over, and it's the one that can quietly create real problems.</p>
+
+            <p><strong>How weighted priority actually works:</strong> When you assign priority weights, GHL uses those weights to determine which rep gets a booking when multiple reps are available at the same time. A rep with a weight of 3 will receive roughly three times as many bookings as a rep with a weight of 1 — it's proportional, not sequential.</p>
+
+            <p>Here's a real scenario where this matters. I worked with a sales team where the lead closer had an 80% show rate and a 40% close rate. The other two reps were newer — show rates were fine but close rates were half that. The client wanted the hot leads (those who had engaged with multiple emails before booking) going to the senior rep first. We set her weight to 3 and the others at 1. Result: she was getting the majority of same-time-availability bookings while the other two still got steady volume. They could have built this with manual lead assignment logic, but weighted Round Robin handled it automatically.</p>
+
+            <p>If it's a pure team effort with no reason to favor one rep, use equal distribution — all weights set to 1. But make a conscious choice. The default is equal distribution, and I've had clients assume that's what they had when they'd accidentally set different weights and one rep was getting 60% of bookings without anyone realizing it.</p>
+
+            <p>Fourth, confirm your meeting duration and lead time settings. Lead time (the minimum notice before someone can book) should match how your client actually operates. A service business that needs 48 hours to prepare for a consult should not have a 1-hour lead time. I typically set lead time to 24–48 hours for professional services unless there's a specific reason for same-day availability.</p>
+
+            <h2>Connecting Calendars to Pipelines and Automations</h2>
+
+            <p>A calendar that doesn't connect to the rest of the CRM is a scheduling app. That's not what GHL is for.</p>
+
+            <p>Here's how I wire it up for every client:</p>
+
+            <p>When a booking is made, it should trigger a workflow. At minimum, that workflow should:</p>
+            <ol>
+                <li>Tag the contact with the appointment type</li>
+                <li>Move them to the appropriate pipeline stage (usually something like "Appt Booked" or "Awaiting Consult")</li>
+                <li>Send a confirmation email and/or SMS immediately</li>
+                <li>Deliver a complete reminder sequence before the appointment</li>
+            </ol>
+
+            <p>I use the "Appointment Status" trigger in workflows, not just the "Form Submitted" trigger. The difference matters because appointment status triggers fire on changes — booked, cancelled, no-showed, completed. This lets me build re-engagement flows for no-shows without having to manually track them.</p>
+
+            <h2>What a Complete Reminder Sequence Actually Looks Like</h2>
+
+            <p>This is the part most agencies half-build. They set up one confirmation email and call it done. A complete reminder flow is what keeps show rates high.</p>
+
+            <p>Here's the sequence I build for every professional services client:</p>
+
+            <p><strong>Immediately after booking — confirmation email + SMS.</strong> The email confirms the date, time, and format (Zoom link, phone number, or address). It includes a calendar file attachment (.ics) so they can add it with one click. The SMS is short: "Hey [First Name], you're confirmed for [date] at [time] with [rep name]. Add it to your calendar: [link]." Don't bury the details — state them clearly and immediately.</p>
+
+            <p><strong>48 hours before — reminder email.</strong> This one does a bit more work. It re-states the appointment details, includes the Zoom link prominently, and gives them a one-click link to reschedule if needed. I also include a short "what to have ready" section if the appointment requires any prep — it increases show quality, not just show rate. Keep it short. Three to five sentences of prep instructions max.</p>
+
+            <p><strong>24 hours before — SMS reminder.</strong> One message. "Reminder: you're scheduled with [rep name] tomorrow at [time]. Here's your Zoom link: [link]. Need to reschedule? [reschedule link]." That's it. No pitch, no fluff.</p>
+
+            <p><strong>1 hour before — final SMS.</strong> "[First Name] — your call with [rep name] starts in 1 hour. Join here: [Zoom link]." Short. Direct. This is the one that catches people who forgot.</p>
+
+            <p>Build all four of these in a single workflow triggered off the appointment booked status. Set them as wait steps (Wait Until: 48 hours before appointment date, etc.) rather than relative delays from booking, so they fire at the right time regardless of when the contact booked.</p>
+
+            <p>For high-ticket appointments, I also add a no-show branch: if the appointment status changes to "No-Showed," the workflow branches into a re-booking sequence. First touchpoint is within the hour — "We missed you. Life happens. Here's a link to grab another time." Second touchpoint 24 hours later. Then it hands off to the rep for a personal follow-up if there's still no response.</p>
+
+            <h2>The Most Common Calendar Setup Mistakes I Fix</h2>
+
+            <h3>1. Using Simple Calendar for a team.</h3>
+            <p>I see this constantly. A client has three salespeople and they've given each one a separate Simple Calendar, then created some manual process to decide who gets leads. Round Robin exists for this reason. Consolidate it, connect the team, let GHL distribute automatically.</p>
+
+            <h3>2. Not using calendar groups.</h3>
+            <p>If a client has multiple calendar types (say, a 15-minute discovery call and a 60-minute strategy session), they should be organized into a calendar group. The group gives you a single landing page with all booking options. Without it, you're sharing multiple separate links, contacts get confused, and tracking gets messy.</p>
+
+            <h3>3. Forgetting timezone settings.</h3>
+            <p>GHL will display in the user's timezone by default, but if you're setting up a client whose customers are in a different timezone, you need to verify the calendar is set correctly. I've seen a client on the East Coast whose booking calendar was defaulting to Pacific time — her first appointment slots every day showed up as 9 AM Pacific (noon her time) and she was confused why no one was booking mornings.</p>
+
+            <h3>4. Not testing the confirmation flow before going live.</h3>
+            <p>I always do a test booking before handing a calendar to a client. Every single time. I book a fake appointment using a test contact, go through the whole flow, confirm the confirmation email arrives, check that the workflow triggers correctly, and make sure the calendar invite shows up with the right Zoom or phone number in the details. Fifteen minutes of testing saves hours of troubleshooting after launch.</p>
+
+            <h3>5. Leaving the default cancellation and reschedule settings.</h3>
+            <p>GHL allows contacts to cancel and reschedule through the confirmation email link. This is great — except the default settings often allow cancellation up to the minute of the appointment, which wrecks client schedules. I set a cancellation cutoff (usually 24 hours) and make sure the reschedule window is configured to require the same lead time as initial bookings.</p>
+
+            <h2>When Things Break After Setup</h2>
+
+            <p>If a calendar was working and then starts behaving wrong, the first things I check are calendar sync status, workflow triggers, availability hours, and the conflict-check setting. Here's what the symptoms actually look like and how I diagnose each one.</p>
+
+            <p><strong>Symptom: Double-bookings.</strong> Almost always a disconnected calendar sync. The tell is that it's happening for a specific rep, not all of them. Go to that user's profile, check their connected calendar under Integrations, and verify the sync is active. Google and Outlook connections expire or lose permissions — this is more common than it should be. Re-authenticate the connection. If the double-bookings were happening for all reps simultaneously, check the "check for conflicts" setting on the calendar itself. If that toggle is off, GHL isn't cross-referencing personal calendar events at all.</p>
+
+            <p><strong>Symptom: Confirmation emails not sending, or sending twice.</strong> This is almost always a workflow trigger issue. Check whether there are duplicate workflows both triggered by the same appointment event. I've inherited accounts where someone duplicated a workflow "just to test something" and never deleted the original. Both fire on every booking. Fix: audit active workflows filtered by the appointment trigger and disable any duplicates. If confirmations aren't sending at all, check whether the workflow is active (not draft) and whether the trigger is set to "Appointment Status &gt; Booked" not just "Form Submitted."</p>
+
+            <p><strong>Symptom: No available slots showing for contacts even when the calendar should have openings.</strong> Check the rep's availability hours in their user profile — not the calendar settings, their profile. Someone may have changed their working hours in GHL, which overrides calendar availability. Also check whether the calendar's date range is configured correctly. If there's a hard end date set on the calendar and you're past it, nothing will show as available. I've seen this trip up clients who set up a calendar for a limited-time offer and forgot to extend the date window when they kept the booking type going.</p>
+
+            <p><strong>Symptom: Appointments showing up in the wrong timezone for contacts.</strong> The calendar itself has a timezone setting separate from the user's profile timezone. Go into the calendar settings and confirm the timezone is set to what the client actually wants displayed. If you want contacts to see times in their own local timezone, enable the "Show time in contact's local timezone" option. If that's already on and it's still wrong, check whether the contact's profile has a timezone set — GHL pulls from the contact record first.</p>
+
+            <p>Calendar issues in GHL almost always fall into one of these patterns. Systematic diagnosis is faster than guessing.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Get Your GHL Setup Done Right</h2>
+            <p>I set up GHL sub-accounts for marketing agencies, including full calendar configuration, workflow connections, and pipeline integration. No cutting corners, no "we'll fix it later." Tell me about your project.</p>
+            <a href="https://www.hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>

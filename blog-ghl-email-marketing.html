@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use GHL's Email Marketing Tools as an Agency (Without Wrecking Deliverability) — Dark Horse</title>
+    <meta name="description" content="Every time I take over a GHL account that has deliverability problems, I find the same thing: someone made a bunch of decisions about email setup in the first week and never revisited them.">
+    <meta property="og:title" content="How to Use GHL's Email Marketing Tools as an Agency (Without Wrecking Deliverability)">
+    <meta property="og:description" content="Every time I take over a GHL account that has deliverability problems, I find the same thing: someone made a bunch of decisions about email setup in the first week and never revisited them.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-email-marketing.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://assets.cdn.filesafe.space/6OJiXJpC8dGBkyQvQ10N/media/69b833d03e6072b354417ce5.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-email-marketing.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        /* ── POST LAYOUT ── */
+        .post-wrapper {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 140px 40px 100px;
+        }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta {
+            font-size: 13px; color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800; line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .post-divider {
+            border: none; border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+
+        .post-body p { margin-bottom: 24px; }
+
+        .post-body h2 {
+            font-size: 22px; font-weight: 700;
+            margin: 40px 0 16px; color: var(--white);
+        }
+
+        .post-body h3 {
+            font-size: 17px; font-weight: 600;
+            margin: 28px 0 10px; color: var(--white);
+        }
+
+        .post-body ul, .post-body ol {
+            padding-left: 24px; margin-bottom: 24px;
+        }
+
+        .post-body li { margin-bottom: 10px; }
+
+        .post-body strong { color: var(--white); font-weight: 600; }
+
+        .post-body blockquote {
+            border-left: 3px solid var(--coral);
+            padding: 16px 24px;
+            background: var(--navy-card);
+            border-radius: 0 8px 8px 0;
+            margin: 32px 0;
+            font-size: 17px;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ── POST CTA ── */
+        .post-cta {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .nav-dropdown-toggle svg {
+            width: 11px;
+            height: 11px;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px;
+            padding: 12px 0 8px;
+            min-width: 200px;
+            list-style: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10);
+            rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover {
+            color: var(--white);
+            background: rgba(255,255,255,0.05);
+        }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">July 2026 &nbsp;·&nbsp; 9 min read</div>
+        <h1>How to Use GHL's Email Marketing Tools as an Agency (Without Wrecking Deliverability)</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>Every time I take over a GHL account that has deliverability problems, I find the same thing: someone made a bunch of decisions about email setup in the first week and never revisited them. Wrong sending domain. Campaigns and workflows stepping on each other. Lists that haven't been cleaned since the account launched. And a client who's convinced GHL's email "just doesn't work."</p>
+
+            <p>GHL's email tools work fine. Agencies set them up wrong. Here's how to do it right.</p>
+
+            <h2>Campaigns vs. Workflows: This Is Not a Preference, It's a Function</h2>
+
+            <p>The number one setup mistake I see is agencies using campaigns and workflows interchangeably. They're not the same tool. They're built for different jobs.</p>
+
+            <p><strong>Campaigns</strong> are for broadcast email — one message to a list, sent once (or on a schedule). Think newsletters, promotions, announcements, any time you're sending the same email to a defined group at the same time. Campaigns are built for this. They have list selection, scheduling, and sending infrastructure designed for volume broadcasts.</p>
+
+            <p><strong>Workflows</strong> are for behavioral, triggered email — the right message to the right person based on something they did (or didn't do). Someone fills out a form. They book an appointment. They haven't responded in 7 days. Workflows handle these sequences because they're event-driven and they can branch based on contact behavior.</p>
+
+            <p>Here's what each one looks like in practice.</p>
+
+            <p><strong>Campaign example — monthly newsletter:</strong> You're sending a client's monthly newsletter to their full subscriber list. In GHL, you create a campaign, select the contact list (filtered to "subscribed, engagement tag not 'cold'"), write the email, set the send time for Tuesday at 10 AM in the recipient's timezone, and schedule it. The campaign handles the blast. After it sends, you review the stats: opens, clicks, bounces, unsubscribes. That data informs next month's send.</p>
+
+            <p><strong>Workflow example — post-booking nurture:</strong> A contact books a free consultation through the calendar. The "Appointment Booked" trigger fires. The workflow immediately sends a confirmation email with logistics. It waits 24 hours, then sends a "what to expect on the call" email. If the contact opens that email, a tag is applied and the workflow adds a note in the contact record. If they don't open within 48 hours, the workflow sends an SMS instead. None of this is possible in a campaign — because campaigns don't react to individual behavior, they blast everyone the same way.</p>
+
+            <p>Where I see agencies get into trouble: they try to run drip sequences through campaigns, scheduling them days apart. It works until it doesn't — contacts who enter mid-sequence get the wrong email, timing logic breaks down, and you can't easily branch based on behavior. Use workflows for drip sequences. Always.</p>
+
+            <p>The other mistake: running follow-up automation through a campaign after someone books a call, because "it's just one email." The problem is campaigns are list-based. Behavioral follow-ups should be contact-based and triggered. Put it in a workflow, trigger it off the appointment booking event, and you'll have much more control over timing and conditions.</p>
+
+            <h2>Domain Authentication Is Not Optional</h2>
+
+            <p>Before a client ever sends an email through GHL, the sending domain needs to be authenticated. This means setting up DKIM and SPF records in their DNS. GHL walks you through this in the Email Services settings, but I'm always surprised how many accounts I inherit where this was skipped.</p>
+
+            <p>Here's why it matters: email providers use DKIM and SPF to verify that the email claiming to be from <code>hello@clientbusiness.com</code> actually came from an authorized server. Without these records, you're sending unauthenticated email. It won't necessarily bounce immediately — but it signals spam to receiving mail servers, and over time your deliverability tanks.</p>
+
+            <p>Beyond SPF and DKIM, I also check DMARC. GHL doesn't set this up for you, but your client's domain should have a DMARC policy in place. At minimum, a <code>p=none</code> policy with a reporting address so you can monitor authentication failures. If they're dealing with serious deliverability problems, a <code>p=quarantine</code> or <code>p=reject</code> policy may be appropriate — but don't start there without understanding what's failing authentication first.</p>
+
+            <p>I use MXToolbox to verify all three records after setup. Takes five minutes and confirms everything is configured before the first email goes out.</p>
+
+            <h2>Domain Warmup: What It Is, How Long It Takes, and How to Do It</h2>
+
+            <p>This is the one deliverability topic that trips up most agencies, because it's invisible until something goes wrong.</p>
+
+            <p>When a domain is new — or when a domain switches to a new sending IP or infrastructure — receiving mail servers have no history to judge it by. High volume from an unknown domain looks like spam behavior by default. Domain warmup is the process of gradually increasing your send volume so that you build a positive sending history before you ever approach scale.</p>
+
+            <p>Here's what happens if you skip it: you onboard a new client, import their 8,000 contacts, and send a campaign to the full list in week one. Even if authentication is perfect and the list is clean, receiving servers flag the sudden high volume from an unfamiliar domain. Open rates crater, bounce rates spike, and your client's domain ends up on a blocklist before they've sent ten campaigns.</p>
+
+            <p><strong>How long warmup takes:</strong> Plan for four to six weeks for a new domain to be trusted for volume sends. The goal is to ramp gradually — starting with your most engaged contacts (people who know the sender and are likely to open) and increasing volume as positive engagement signals accumulate.</p>
+
+            <p><strong>How to do it in and around GHL:</strong></p>
+
+            <p>GHL does not have a built-in warmup tool, so you manage this through how you structure your campaigns and lists. Here's the approach I use:</p>
+
+            <p><strong>Week 1:</strong> Send to your highest-engagement segment only. If the client has an existing list, this means contacts who have opened or clicked in the last 30 days. Target 250–500 contacts maximum. If it's a brand-new list with no engagement history, start with known contacts — customers, referral partners, people the client has a real relationship with.</p>
+
+            <p><strong>Week 2:</strong> Expand to engaged contacts from the last 60 days. Aim for 1,000–2,000 contacts.</p>
+
+            <p><strong>Weeks 3–4:</strong> Expand to engaged contacts from the last 90 days. You can now start including contacts who were on the list but haven't interacted recently, as long as the earlier weeks showed strong engagement (open rates above 20%, bounce rates under 1%).</p>
+
+            <p><strong>Weeks 5–6:</strong> Begin sending to the full list, excluding known cold contacts. By this point, your domain has established a positive reputation with major ISPs and high-volume sends are no longer suspicious.</p>
+
+            <p>Watch your metrics weekly. If bounce rates creep above 2% or open rates drop significantly, slow down and don't increase volume that week. The point is steady positive signals, not speed.</p>
+
+            <p>If you're using a dedicated sending domain (a subdomain set up specifically for email, like <code>mail.clientdomain.com</code>), the warmup is domain-specific to that subdomain. Warming up <code>mail.clientdomain.com</code> doesn't carry over from <code>clientdomain.com</code> — they're treated as separate senders.</p>
+
+            <h2>How to Manage Lists Without Destroying Sender Reputation</h2>
+
+            <p>Sender reputation is built at the domain level and the IP level. In GHL, if your client is on a shared sending IP (the default unless they're on dedicated IP), their reputation is partially shared with other GHL users. That makes your list hygiene even more important — you're contributing to a shared pool.</p>
+
+            <p>Here's how I approach list management for every client:</p>
+
+            <p><strong>Verify contacts before importing.</strong> If a client is importing an old list — especially one that's been sitting in a spreadsheet for six months or more — run it through an email verification tool first. I use tools like NeverBounce or ZeroBounce. Remove invalid addresses, role-based addresses (info@, admin@, contact@), and anything that's been previously bounced. Importing a dirty list and blasting it is the fastest way to crater a sender reputation.</p>
+
+            <p><strong>Segment by engagement.</strong> Within GHL, I tag contacts based on email engagement using workflow triggers. Anyone who opens or clicks gets an "engaged" tag. Contacts who haven't opened in 90 days get a "low-engagement" tag. I run re-engagement campaigns to the cold segment before I'd ever remove them — but I never mix cold and engaged contacts in the same broadcast. Engaged contacts get sent to frequently; cold contacts get a single re-engagement attempt and then get suppressed if they don't respond.</p>
+
+            <p><strong>Honor unsubscribes immediately.</strong> GHL handles this automatically, but I always verify the unsubscribe link is present in every email template and that the suppression list is being respected. I've seen accounts where contacts were re-imported from external CSVs and landed back on the active list after unsubscribing. Don't let this happen — it's a CAN-SPAM violation and a deliverability disaster.</p>
+
+            <p><strong>Watch bounce rates.</strong> A hard bounce rate above 2% is a signal to receiving mail servers that something is wrong. I check bounce reporting in GHL's email stats after every campaign. High bounce rates tell me either the list wasn't verified before import or there's a segment with a lot of old or fake addresses.</p>
+
+            <h2>A/B Testing in GHL Campaigns: What to Test, How to Read Results, When to Declare a Winner</h2>
+
+            <p>GHL supports A/B testing on campaigns, and it's underused. Most agencies either don't know it's there or don't bother. Here's how to do it well.</p>
+
+            <p><strong>What to test.</strong> Subject line is the highest-leverage variable to test first — it has the biggest impact on open rate, and open rate determines whether everything else you wrote actually gets read. Once you've found a subject line approach that consistently performs, move to testing the from-name (person vs. company), the preview text, and eventually the email body (one clear CTA vs. multiple links, image-heavy vs. text-focused).</p>
+
+            <p>Test one variable at a time. If you change the subject line and the send time in the same test, you don't know which change drove the result.</p>
+
+            <p><strong>How to set it up in GHL.</strong> When creating a campaign, select the A/B test option before scheduling. You'll set the split percentage — how much of your list gets Version A vs. Version B. I typically run 40/40 with a 20% holdback: 40% gets Version A, 40% gets Version B, and the remaining 20% gets the winning version after results are in. GHL can automatically send to the holdback group after a set time window, or you can do it manually.</p>
+
+            <p><strong>How to read the results.</strong> The primary metric for subject line tests is open rate. Click-through rate matters when you're testing body content or CTAs. Don't declare a winner based on absolute numbers alone — look at the percentage difference relative to your baseline. A 22% open rate vs. a 19% open rate on a list of 500 contacts is a meaningful difference worth paying attention to. The same difference on 50 contacts may just be noise.</p>
+
+            <p><strong>When to declare a winner.</strong> I use 24 hours as my standard window for email open data. Most opens happen within the first 4 hours; by 24 hours you have a reliable picture. If the difference between A and B is less than 3 percentage points on a small list (under 500 per variant), it's probably not statistically meaningful — call it a tie and pick based on other criteria. If the difference is 5+ percentage points, you have a clear winner. Apply that learning to future campaigns and keep building on what works.</p>
+
+            <p>The goal isn't to run one test and be done. It's to accumulate data about what resonates with your client's specific audience so every campaign performs better than the last.</p>
+
+            <h2>Subject Lines, Send Times, and the Stuff That Actually Affects Opens</h2>
+
+            <p>I'm going to give you my actual working defaults because the generic advice on this is useless.</p>
+
+            <p><strong>Subject lines:</strong> Keep them under 50 characters so they don't get cut off on mobile. Don't use all-caps, excessive punctuation, or obvious spam trigger words ("FREE!!!", "Act NOW"). Write them like a human, not a marketing robot. I test two subject lines whenever the list is large enough to split — GHL supports A/B testing on campaigns.</p>
+
+            <p><strong>Sender name:</strong> Use a person's name, not the company name. "Krys at Dark Horse" performs better than "Dark Horse Agency" in almost every niche I've worked in. Contacts are more likely to open email from a person they recognize.</p>
+
+            <p><strong>Send times:</strong> My starting point for most B2B clients is Tuesday through Thursday, 9–11 AM in the recipient's local timezone. GHL has a timezone-based sending option — use it for any list that spans multiple timezones. I adjust based on actual open-rate data after the first few sends. Don't trust industry averages over your client's actual audience data.</p>
+
+            <p><strong>From address:</strong> Use a real, monitored inbox. I see agencies set up email sending from <code>noreply@clientdomain.com</code> — this is bad practice. Contacts who try to reply to an email and get bounced back are less likely to engage again. More importantly, ISPs look at reply-to addresses as a reputation signal. Use a real address.</p>
+
+            <h2>Why Agencies Blame GHL for Deliverability When It's Their Own Setup</h2>
+
+            <p>I've had clients come to me convinced that GHL was broken because emails were landing in spam. In every single case, it was one of these:</p>
+
+            <h3>1. Domain not authenticated.</h3>
+            <p>DKIM or SPF is missing. The emails are sending — GHL doesn't block unauthenticated sends — but every receiving mail server sees them without a valid authentication signature. The fix is straightforward: go to Email Services in GHL, add the sending domain, generate the DNS records, add them in your client's DNS provider, and verify. This takes under 30 minutes. If the records aren't propagating, give it up to 48 hours and verify with MXToolbox. Don't let a client send a single campaign before this is done.</p>
+
+            <h3>2. Dirty list.</h3>
+            <p>Someone imported an old contact list without running it through a verification tool. The list had 15% invalid addresses. After two campaigns, the bounce rate was at 8% and the domain was flagged. I've inherited accounts in this state where the only path forward was switching to a subdomain for email sending and doing a full warmup from scratch, because the main domain's sender reputation was too damaged. The fix in this state isn't a quick one — prevention is much easier. Verify every list before import. No exceptions.</p>
+
+            <h3>3. Too much too fast.</h3>
+            <p>A new sending domain or subdomain blasted thousands of contacts in the first week. No warmup. No gradual ramp. The domain had no sender history, and the sudden volume looked like a spam operation to ISPs. The fix is to slow down, start re-sending to small engaged segments only, and rebuild your sending history over 4–6 weeks. It's painful, but it works. See the warmup section above for exactly how to do it.</p>
+
+            <h3>4. Spam-trigger content.</h3>
+            <p>The email body has trigger words, it's 90% image with two lines of text, there's no plain text version, and every other sentence has a call to action. ISPs filter on content as well as sender reputation. The fix: write emails that look like they came from a human being. Mostly text, one clear CTA, a plain text version always included (GHL generates this automatically if you let it), and no word or phrase combinations that scream "marketing blast." Run your email through a tool like Mail-Tester before sending if you're unsure.</p>
+
+            <h3>5. No engagement-based segmentation.</h3>
+            <p>The client is sending every email to every contact, including 3,000 people who haven't opened anything in over a year. Dead contacts drag your engagement rate down across every send. ISPs use engagement signals — open rates, clicks, replies — as a factor in deliverability decisions. Low engagement from a segment tells them your emails aren't wanted. The fix is to stop sending to cold contacts until they've been through a deliberate re-engagement sequence. If they don't re-engage after one targeted attempt, suppress them. You'd rather have a smaller active list than a large list that's quietly destroying your reputation.</p>
+
+            <p>The platform is fine. The setup is the problem.</p>
+
+            <h2>Set Up a Review Cadence</h2>
+
+            <p>Email marketing in GHL isn't a set-it-and-forget-it situation, and I tell every agency client that upfront. I recommend a monthly check-in on:</p>
+
+            <ul>
+                <li>Deliverability metrics (open rates, bounce rates, unsubscribe rates)</li>
+                <li>List health — size, engagement breakdown, recent unsubscribes</li>
+                <li>Workflow audit — are triggered sequences still firing correctly, are there any contacts stuck mid-sequence</li>
+                <li>Domain authentication status — connections can break, DKIM keys can expire</li>
+            </ul>
+
+            <p>Catching a problem early is always easier than rebuilding a sender reputation that's been damaged over six months of bad sends.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Ready to Get Your Client's GHL Email Actually Working?</h2>
+            <p>I handle full GHL sub-account setup for marketing agencies — including email configuration, domain authentication, list management strategy, and campaign and workflow architecture. Tell me about your project.</p>
+            <a href="https://www.hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>
