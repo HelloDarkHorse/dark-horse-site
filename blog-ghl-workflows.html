@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build GHL Workflows That Actually Work (Without Breaking Everything) — Dark Horse</title>
+    <meta name="description" content="GHL makes it deceptively easy to spin up a workflow in ten minutes. The problem is that 'easy to build' does not mean 'hard to break.' Here's everything I wish someone had told me before I touched my first GHL account.">
+    <meta property="og:title" content="How to Build GHL Workflows That Actually Work (Without Breaking Everything)">
+    <meta property="og:description" content="GHL makes it deceptively easy to spin up a workflow in ten minutes. The problem is that 'easy to build' does not mean 'hard to break.' Here's everything I wish someone had told me before I touched my first GHL account.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-workflows.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://assets.cdn.filesafe.space/6OJiXJpC8dGBkyQvQ10N/media/69b833d03e6072b354417ce5.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-workflows.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        /* ── POST LAYOUT ── */
+        .post-wrapper {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 140px 40px 100px;
+        }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta {
+            font-size: 13px; color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800; line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .post-divider {
+            border: none; border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+
+        .post-body p { margin-bottom: 24px; }
+
+        .post-body h2 {
+            font-size: 22px; font-weight: 700;
+            margin: 40px 0 16px; color: var(--white);
+        }
+
+        .post-body h3 {
+            font-size: 17px; font-weight: 600;
+            margin: 28px 0 10px; color: var(--white);
+        }
+
+        .post-body ul, .post-body ol {
+            padding-left: 24px; margin-bottom: 24px;
+        }
+
+        .post-body li { margin-bottom: 10px; }
+
+        .post-body strong { color: var(--white); font-weight: 600; }
+
+        .post-body blockquote {
+            border-left: 3px solid var(--coral);
+            padding: 16px 24px;
+            background: var(--navy-card);
+            border-radius: 0 8px 8px 0;
+            margin: 32px 0;
+            font-size: 17px;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ── POST CTA ── */
+        .post-cta {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        /* ── NAV DROPDOWN ── */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .nav-dropdown-toggle svg {
+            width: 11px;
+            height: 11px;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px;
+            padding: 12px 0 8px;
+            min-width: 200px;
+            list-style: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+            z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10);
+            rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover {
+            color: var(--white);
+            background: rgba(255,255,255,0.05);
+        }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">July 2026 &nbsp;·&nbsp; 8 min read</div>
+        <h1>How to Build GHL Workflows That Actually Work (Without Breaking Everything)</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>I've inherited a lot of GoHighLevel accounts. And I mean <em>a lot</em>. Agencies hand them off to me after their in-house person quit, or after a client complained that their leads were getting three emails a day instead of one, or after someone accidentally emailed their entire contact list a message meant for a single person.</p>
+
+            <p>Every time, the root cause is the same: workflows were built fast, without a plan, and nobody tested them before they went live.</p>
+
+            <p>I'm not here to shame anyone — GHL makes it deceptively easy to spin up a workflow in ten minutes. The problem is that "easy to build" does not mean "hard to break." Workflows that look fine on the surface can silently fire out of order, loop indefinitely, or skip contacts entirely.</p>
+
+            <p>This post is everything I wish someone had told me before I touched my first GHL account. If you implement GHL for clients, bookmark it.</p>
+
+            <h2>1. Know Your Triggers — Because They're Not All the Same</h2>
+
+            <p>The trigger is the most important decision you make when building a workflow. Get it wrong and everything downstream is broken before you've written a single action.</p>
+
+            <p>Here's a quick breakdown of the most common trigger types and when to use each:</p>
+
+            <p><strong>Contact Created</strong> fires when a new contact is added to the CRM — whether by form, import, manual entry, or API. Use this for onboarding sequences you want every new contact to enter. But be careful: if you're importing a list of 3,000 old leads, this trigger fires 3,000 times, right now.</p>
+
+            <p><strong>Form Submitted</strong> fires when a specific form is filled out. This is your friend for lead magnet delivery, consultation request confirmations, and anything tied to a specific opt-in. More targeted than Contact Created — it only fires when that form is submitted, not on every contact who happens to exist in your system.</p>
+
+            <p><strong>Appointment</strong> triggers are split into several sub-types: appointment scheduled, appointment confirmed, appointment cancelled, appointment no-showed. Do not use "appointment scheduled" when you mean "appointment confirmed" — they are not the same thing, and conflating them will send booking confirmation emails to contacts who never confirmed anything.</p>
+
+            <p><strong>Tag Added</strong> is one of the most flexible triggers and also one of the most abused. It's great for branching contacts into different sequences based on their behavior. It's terrible when you have fifteen different workflows all listening for the same tag and no documentation explaining why.</p>
+
+            <p><strong>Pipeline Stage Changed</strong> is perfect for deal-stage follow-up sequences — moving a contact from "Proposal Sent" to "Proposal Viewed" to "Closed Won" with different actions at each stage. Don't use this for general nurture sequences; that's what form and contact triggers are for.</p>
+
+            <p><strong>Manual Trigger (Run for Contact)</strong> is useful for testing and for one-off sends. It should not be the backbone of any automated workflow in production.</p>
+
+            <p>The rule I use: before picking a trigger, write down in plain English what event should start this workflow. Then find the trigger that most precisely matches that event. If you're approximating, you're already in trouble.</p>
+
+            <h2>2. Build Clean — Naming, Folders, and Descriptions</h2>
+
+            <p>A workflow you built six months ago should be understandable in thirty seconds. If it's not, you'll spend two hours reverse-engineering it when something breaks at 9pm on a Friday.</p>
+
+            <p><strong>Naming conventions.</strong> I use this format: <code>[Client/Brand] — [Trigger Event] — [Purpose]</code>. For example: <code>Sunrise Dental — Form Submitted: Free Consult Request — Lead Nurture Sequence</code>. Long? Yes. Confusing? Never.</p>
+
+            <p>Avoid names like "New Workflow 4" or "Copy of Email Sequence." Those are land mines for the next person who touches the account — which might be you.</p>
+
+            <p><strong>Folders.</strong> GHL lets you organize workflows into folders. Use them. My typical folder structure:</p>
+            <ul>
+                <li><strong>Active — Lead Gen</strong> (forms, ads, opt-ins)</li>
+                <li><strong>Active — Nurture</strong> (ongoing drips, re-engagement)</li>
+                <li><strong>Active — Appointments</strong> (booking, reminders, follow-up)</li>
+                <li><strong>Active — Pipelines</strong> (deal-stage automations)</li>
+                <li><strong>Archive</strong> (anything turned off but not yet deleted)</li>
+            </ul>
+
+            <p>Never delete a workflow that has ever been active. Turn it off and move it to Archive. You will absolutely need to reference it later.</p>
+
+            <p><strong>Descriptions and notes.</strong> Every workflow should have a description that answers: what triggers this, who enters it, what does it do, and when was it last modified. Use the Notes field inside the workflow editor. I also add a "Wait" step with a descriptive label at the top of complex workflows that explains the logic — it shows up in the action list and acts as inline documentation.</p>
+
+            <p>Color-code your steps if you're doing anything complex. GHL lets you assign colors to actions. I use green for sends, yellow for conditions, red for anything that modifies contact data (adding tags, updating fields). It makes the workflow scannable at a glance.</p>
+
+            <h2>3. Common Mistakes That Will Ruin Your Day</h2>
+
+            <p><strong>Infinite loops.</strong> This is the big one. An infinite loop happens when a workflow's action triggers the same workflow again. Classic example: a workflow triggered by "Tag Added: New Lead" adds the tag "New Lead" at the end as a reset step. Now it fires again. And again. And again — until you have a contact who received 400 emails in an hour.</p>
+
+            <p>The fix: never add the same tag that triggered the workflow as an action inside it. Use a separate "Workflow Entry" tag that you remove at the start of the workflow and never re-add.</p>
+
+            <p><strong>Missing wait steps.</strong> GHL actions execute sequentially, but without a wait step between them, they can fire nearly simultaneously. If you're sending an SMS and then an email, add at least a 1–2 minute wait between them. Otherwise contacts get a wall of messages at once — and deliverability tanks.</p>
+
+            <p><strong>Workflows that fire multiple times.</strong> This happens when "Allow Re-entry" is turned on without thinking through the consequences. Re-entry is useful for recurring triggers (like a monthly check-in campaign) but disastrous for one-time sequences (like a welcome series). Audit every workflow and ask: should a contact ever enter this more than once? If not, re-entry should be off.</p>
+
+            <p><strong>Out-of-order firing.</strong> When multiple workflows share the same trigger, GHL doesn't guarantee which fires first. If Workflow A adds a tag and Workflow B is supposed to read that tag, you can't assume B waits for A to finish. Use a single entry-point workflow with branching logic instead of multiple parallel workflows sharing a trigger.</p>
+
+            <h2>4. Test Before It Touches Real Contacts</h2>
+
+            <p>I do not care how simple the workflow is. I test it. Every time.</p>
+
+            <p>Here's my process:</p>
+
+            <p><strong>Create a dedicated test contact.</strong> Use your own email (or a separate test inbox), a fake phone number, and a clear name — something like "TEST — Ivy Smith" so nobody ever confuses it for a real lead.</p>
+
+            <p><strong>Clone and isolate the workflow.</strong> I duplicate the workflow, rename it with a "TEST:" prefix, and add a filter condition at the top: "Contact Name contains TEST." That way, when I run the test, only my test contact enters it.</p>
+
+            <p><strong>Manually trigger it.</strong> Use "Run for Contact" on your test contact, then watch the workflow execute in real time. GHL's execution history shows you every step — when it fired, what it sent, what conditions were evaluated.</p>
+
+            <p><strong>Check the outputs.</strong> Did the email land in your inbox? Does it look right on mobile? Did the SMS send? Did the tag get added? Did the contact move to the right pipeline stage? Go through every single action and verify the result, not just that the action "ran."</p>
+
+            <p><strong>Check the edge cases.</strong> What happens if the contact already has the tag? What if the email field is blank? What if the appointment was cancelled before the reminder fired? Test the failure modes, not just the happy path.</p>
+
+            <p>Only after all of that do I turn the live workflow on.</p>
+
+            <h2>5. Auditing a Mess You Inherited</h2>
+
+            <p>Nobody hands off a clean account. When you inherit a client's GHL, assume chaos until proven otherwise.</p>
+
+            <p><strong>Start with the workflow list.</strong> Export or screenshot it. How many are there? How many are active? Look for duplicate names, anything labeled "Copy of," and workflows with no description. Those are your first red flags.</p>
+
+            <p><strong>Check re-entry settings on every active workflow.</strong> This takes ten minutes and has saved me from catastrophes more times than I can count.</p>
+
+            <p><strong>Look for shared triggers.</strong> Filter by trigger type and see which workflows share the same trigger event. Map out what fires when. You're looking for conflicts, redundancies, and gaps.</p>
+
+            <p><strong>Trace a test contact through the system.</strong> Create a test contact, fill out the primary intake form, and watch what happens. Check the contact's activity log after five minutes. Does the sequence look right? Are there duplicate sends? Did anything unexpected fire?</p>
+
+            <p><strong>Talk to the client.</strong> Ask what's been working, what's broken, and what they've complained about but never got fixed. They've been living inside this system — they know where it hurts.</p>
+
+            <p>Document everything you find before you change anything. I use a simple spreadsheet: workflow name, trigger, purpose, re-entry on/off, status (active/inactive/needs review), and notes. That becomes the handoff document if I ever pass the account to someone else.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Ready to Stop Fighting Your Workflows?</h2>
+            <p>GHL is genuinely powerful when it's set up with intention. If you're an agency that implements GHL for clients and you're tired of cleaning up workflow fires, I'd love to help — whether it's an audit, a full rebuild, or ongoing implementation support.</p>
+            <a href="https://hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>

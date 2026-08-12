@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHL Reporting and Dashboards: What to Track, What to Ignore, and What to Show Clients — Dark Horse</title>
+    <meta name="description" content="Most of what GHL tracks is useful internally. Very little of it is what clients actually care about. Here's how to build dashboards and reports that tell the right story.">
+    <meta property="og:title" content="GHL Reporting and Dashboards: What to Track, What to Ignore, and What to Show Clients">
+    <meta property="og:description" content="Most of what GHL tracks is useful internally. Very little of it is what clients actually care about. Here's how to build dashboards and reports that tell the right story.">
+    <meta property="og:url" content="https://www.hellodarkhorse.com/blog-ghl-reporting-dashboards.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://assets.cdn.filesafe.space/6OJiXJpC8dGBkyQvQ10N/media/69b833d03e6072b354417ce5.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.hellodarkhorse.com/blog-ghl-reporting-dashboards.html">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0B1120; --navy-light: #0F1829; --navy-card: #111D35;
+            --coral: #E05C6F; --gold: #C9A84C;
+            --white: #FFFFFF; --text-muted: #8A9BB5;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 16px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+        .logo em { font-style: normal; color: var(--coral); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta { background: var(--coral) !important; color: white !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; transition: opacity 0.2s !important; }
+        .nav-cta:hover { opacity: 0.85; }
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,17,32,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu-spacer { height: 80px; }
+        .mobile-menu a { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-cta { background: var(--coral); padding: 14px 32px; border-radius: 8px; }
+        .mobile-backdrop { display: none; position: fixed; inset: 0; z-index: 98; }
+
+        .post-wrapper {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 140px 40px 100px;
+        }
+
+        .post-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            margin-bottom: 40px; transition: color 0.2s;
+        }
+        .post-back:hover { color: var(--white); }
+
+        .post-tag {
+            display: inline-block;
+            background: rgba(224,92,111,0.12);
+            color: var(--coral); font-size: 10px;
+            font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(224,92,111,0.2);
+        }
+
+        .post-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800; line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .post-divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+        .post-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.88); }
+        .post-body p { margin-bottom: 24px; }
+        .post-body h2 { font-size: 22px; font-weight: 700; margin: 40px 0 16px; color: var(--white); }
+        .post-body h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; color: var(--white); }
+        .post-body ul, .post-body ol { padding-left: 24px; margin-bottom: 24px; }
+        .post-body li { margin-bottom: 10px; }
+        .post-body strong { color: var(--white); font-weight: 600; }
+        .post-body blockquote {
+            border-left: 3px solid var(--coral); padding: 16px 24px;
+            background: var(--navy-card); border-radius: 0 8px 8px 0;
+            margin: 32px 0; font-size: 17px; font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .post-cta {
+            background: var(--navy-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 48px 40px; text-align: center; margin-top: 60px;
+        }
+        .post-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+        .post-cta p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+        .btn-coral {
+            display: inline-block; background: var(--coral); color: white;
+            padding: 14px 32px; border-radius: 8px;
+            font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+        }
+        .btn-coral:hover { opacity: 0.85; }
+
+        footer {
+            background: var(--navy-light); border-top: 1px solid var(--border);
+            padding: 48px 60px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 24px;
+        }
+        .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+        .footer-logo em { font-style: normal; color: var(--coral); }
+        .footer-tagline { font-size: 12px; color: var(--text-muted); }
+        .footer-copy { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+        .footer-social-icons a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-social-icons a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .post-wrapper { padding: 120px 24px 80px; }
+            footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+            .post-cta { padding: 36px 24px; }
+        }
+
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .nav-dropdown-toggle svg { width: 11px; height: 11px; transition: transform 0.2s; flex-shrink: 0; }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 24, 41, 0.98);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 10px;
+            padding: 12px 0 8px; min-width: 200px; list-style: none;
+            opacity: 0; pointer-events: none;
+            transform: translateX(-50%) translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45); z-index: 200;
+        }
+        .nav-dropdown-menu::before {
+            content: ''; position: absolute; top: -5px; left: 50%;
+            transform: translateX(-50%); width: 10px; height: 10px;
+            background: rgba(15, 24, 41, 0.98);
+            border-left: 1px solid rgba(255,255,255,0.10);
+            border-top: 1px solid rgba(255,255,255,0.10); rotate: 45deg;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+        .nav-dropdown-menu li a {
+            display: block; padding: 10px 20px; font-size: 13px;
+            color: var(--text-muted); text-decoration: none; font-weight: 500;
+            transition: color 0.15s, background 0.15s; white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+        .nav-dropdown-menu li:first-child a { border-radius: 8px 8px 0 0; }
+        .nav-dropdown-menu li:last-child a { border-radius: 0 0 8px 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DARK <em>HORSE</em></a>
+        <ul class="nav-links">
+            <li class="nav-dropdown">
+                <a href="services.html" class="nav-dropdown-toggle">Services <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.html">GHL Implementation</a></li>
+                    <li><a href="equine.html">Horse Business Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Work With Me</a></li>
+        </ul>
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-spacer"></div>
+        <a href="services.html">GHL Implementation</a>
+        <a href="equine.html">Horse Business Marketing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="mobile-cta">Work With Me</a>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <article class="post-wrapper">
+
+        <a href="blog.html" class="post-back">← Back to Blog</a>
+
+        <span class="post-tag">GoHighLevel</span>
+        <div class="post-meta">August 2026 &nbsp;·&nbsp; 8 min read</div>
+        <h1>GHL Reporting and Dashboards: What to Track, What to Ignore, and What to Show Clients</h1>
+        <hr class="post-divider">
+
+        <div class="post-body">
+
+            <p>Every agency I talk to has the same problem: they log into GoHighLevel, see seventeen different reports, and either send clients a screenshot of the wrong one or spiral into a 40-tab spreadsheet trying to make it "look professional." I've been there. Here's what I've learned after implementing GHL for more agencies than I can count.</p>
+
+            <p>The short version: most of what GHL tracks is useful <em>internally</em>. Very little of it is what clients actually care about. Knowing the difference saves you from awkward calls where a client asks "but did it make us money?" and you're pointing at email open rates.</p>
+
+            <p>Let's break it all down.</p>
+
+            <h2>The Built-In Reports: What They Actually Tell You</h2>
+
+            <p>GHL comes with several native report types. Here's an honest assessment of each.</p>
+
+            <h3>Contact Activity Report</h3>
+
+            <p>This report shows you what's happening at the contact level — messages sent, calls logged, emails delivered, workflow actions fired. It's granular to the point of being overwhelming.</p>
+
+            <p><strong>What it's good for:</strong> Debugging. If a contact isn't moving through a workflow, this is where you find out why. If a campaign triggered 3,000 emails but you expected 3,400, the contact activity report will show you where things dropped off.</p>
+
+            <p><strong>What it is not good for:</strong> Client reporting. Showing a client "we sent 847 SMS messages this month" tells them nothing about whether their business grew. Save this one for your internal audits.</p>
+
+            <h3>Pipeline Reports</h3>
+
+            <p>This one is the most client-facing report GHL offers natively. It shows contacts by pipeline stage, deal values (if you're using them), and movement through the funnel.</p>
+
+            <p><strong>What it's good for:</strong> Showing real business activity — how many leads came in, how many are being worked, how many converted. If you've set up pipelines correctly with dollar values attached, this becomes a revenue story, not just a contact story.</p>
+
+            <p><strong>What to watch out for:</strong> Pipelines are only as accurate as the data inside them. If your client's team isn't moving deals through stages consistently, this report will lie to you. Before you rely on it for client reporting, make sure stage hygiene is solid.</p>
+
+            <h3>Call Reports</h3>
+
+            <p>Call reports show volume, duration, outcomes, and (if you're using GHL's calling) recordings and transcripts.</p>
+
+            <p><strong>What it's good for:</strong> Tracking sales team activity, identifying if follow-up calls are actually happening after a lead comes in, and spotting patterns (like calls clustering at the wrong time of day).</p>
+
+            <p><strong>What to ignore:</strong> Raw call volume as a success metric. A team that makes 200 calls and books 0 appointments is not performing. Pair call data with appointment data before drawing conclusions.</p>
+
+            <h3>Appointment Reports</h3>
+
+            <p>This is one I actually like. GHL's appointment report tracks bookings, cancellations, no-shows, and completions. If your client is running any kind of service business, this is core data.</p>
+
+            <p><strong>What it's good for:</strong> Showing your system is working. If workflows are booking appointments automatically — from lead in to calendar invite — the appointment report proves it. It also surfaces problems fast (cancellation rate spiking usually means something in the follow-up sequence broke).</p>
+
+            <p><strong>The caveat:</strong> It only tracks appointments booked inside GHL's calendar. If your client is also using an external booking tool, you're only seeing part of the picture.</p>
+
+            <h2>Building a Custom Dashboard in GHL</h2>
+
+            <p>GHL's dashboard builder lets you add widgets for almost anything the platform tracks. This is powerful and also the fastest way to create noise.</p>
+
+            <h3>Widgets Worth Adding</h3>
+
+            <ul>
+                <li><strong>Opportunities by Stage</strong> — real-time view of where leads are sitting in the pipeline</li>
+                <li><strong>Appointments Booked (this month vs. last month)</strong> — immediately answers "is the system working?"</li>
+                <li><strong>Leads Added (by source)</strong> — shows which channels are actually delivering contacts</li>
+                <li><strong>Calls Made / Conversations Started</strong> — useful for sales-assisted funnels</li>
+                <li><strong>Revenue Closed (if using deal values)</strong> — the north star metric for most clients</li>
+            </ul>
+
+            <h3>Widgets That Are Mostly Noise</h3>
+
+            <ul>
+                <li><strong>Total Contacts</strong> — this number almost always goes up. It doesn't tell you if the contacts are any good.</li>
+                <li><strong>Emails Sent</strong> — volume without outcome is meaningless</li>
+                <li><strong>Workflow Enrollments</strong> — again, volume. What matters is what happened at the end of the workflow, not the beginning.</li>
+                <li><strong>Social Planner stats</strong> — unless you're running a social-heavy engagement campaign, this clutters a client dashboard</li>
+            </ul>
+
+            <h3>How to Arrange a Client-Facing Dashboard</h3>
+
+            <p>Think in layers. The first thing a client sees should answer "how's business?" — that means pipeline health and appointments. The second layer should answer "what drove that?" — lead sources, campaign activity. Keep anything operational (workflow triggers, SMS sent counts, system health) off the client view entirely.</p>
+
+            <p>I usually build two dashboards: one for the client, one for the agency. The client dashboard is clean — five to seven widgets max, all outcome-focused. The agency dashboard has everything else. Clients don't need to see how the sausage is made.</p>
+
+            <h2>What to Report Monthly — and What to Keep Internal</h2>
+
+            <p>Here's a mental model I come back to constantly: <strong>clients care about results, not activity</strong>.</p>
+
+            <h3>What Goes in the Client Report</h3>
+
+            <ul>
+                <li>Leads generated (total, by source)</li>
+                <li>Appointments booked</li>
+                <li>Appointments completed (no-shows and cancellations broken out)</li>
+                <li>Pipeline value added this month</li>
+                <li>Deals closed or revenue attributed (if trackable)</li>
+                <li>Any notable campaign result — an email sequence that drove a spike, a workflow that fired on a new trigger</li>
+            </ul>
+
+            <p>Frame these as a story, not a spreadsheet. "Your September campaign booked 14 discovery calls, up from 6 last month" lands differently than a table with numbers.</p>
+
+            <h3>What Stays Internal</h3>
+
+            <ul>
+                <li>Email deliverability metrics and bounce rates (fix problems before clients ever see them)</li>
+                <li>Workflow error logs</li>
+                <li>Contact activity detail</li>
+                <li>A/B test intermediate results (share the winner, not the experiment)</li>
+                <li>Automation trigger counts</li>
+                <li>Anything involving the backend configuration</li>
+            </ul>
+
+            <p>If something goes wrong internally — a workflow fired twice, a sequence skipped a step — handle it before the monthly call. Clients hire you to manage this. Showing them every bump in the road doesn't build trust; it builds anxiety.</p>
+
+            <h2>The Reporting Mistakes I See Every Time</h2>
+
+            <h3>Reporting on Vanity Metrics</h3>
+
+            <p>I get it. Contact count is a big number. Email sent volume looks impressive. But a client who paid $3,000 for GHL implementation doesn't want to know you sent 4,200 emails. They want to know if any of those emails turned into revenue.</p>
+
+            <p>The fix: every metric you report should connect to a business outcome. Leads → appointments → revenue. If a metric doesn't sit on that chain, it probably doesn't belong in the client report.</p>
+
+            <h3>Not Setting Baseline Numbers First</h3>
+
+            <p>You can't show "improvement" if you didn't track the starting point. Before any campaign goes live, lock in the baseline: how many appointments per month before GHL? What was the close rate from lead to booked call?</p>
+
+            <p>I build a baseline doc at the start of every engagement and revisit it at the 90-day mark. It's one of the most valuable things I do, because it makes the ROI conversation concrete.</p>
+
+            <h3>Reporting Monthly on Things That Move Quarterly</h3>
+
+            <p>Pipeline value can swing wildly month to month depending on your client's sales cycle. If you're reporting on it every 30 days and the client has a 60-day close cycle, you're going to have a lot of "it'll catch up" conversations. Match your reporting cadence to the actual business rhythm.</p>
+
+            <h2>Using GHL's Attribution Reporting</h2>
+
+            <p>GHL's attribution feature is underused and underexplained. At its core, it lets you trace a contact's journey back to the source — which ad, which form, which campaign touched them first and last before they converted.</p>
+
+            <h3>Why This Matters</h3>
+
+            <p>Without attribution, you're guessing at what's working. With it, you can walk into a client call and say: "Your Facebook lead form drove 60% of booked appointments this month. Your Google ad drove 30%. Your cold email sequence drove 10%." That's the conversation that gets you a longer retainer.</p>
+
+            <h3>How to Set It Up</h3>
+
+            <p>Attribution relies on UTM parameters being passed through your lead sources and GHL capturing them correctly. If your client is running any paid traffic, make sure UTMs are embedded in every ad URL before the traffic goes live. GHL will capture those on form submission and associate them with the contact record.</p>
+
+            <p>From there, the attribution report (under Reporting → Attribution) lets you filter by first touch, last touch, or linear attribution across the contact's timeline. I default to last-touch for most clients because it's the most intuitive — what was the last thing they did before converting?</p>
+
+            <h3>What to Show Clients</h3>
+
+            <p>Pull attribution data into your monthly report as a "what drove results" section. A simple breakdown — top 3 sources by appointments booked, with conversion rate per source — is usually enough. You don't need to over-engineer it. Clients want to know where to put more budget. Give them that answer clearly.</p>
+
+            <h2>The Bottom Line</h2>
+
+            <p>GHL's reporting tools are genuinely capable. The problem isn't the platform — it's how agencies use it. Build client dashboards around outcomes, not activity. Keep the operational detail internal. Use attribution data to prove ROI on specific campaigns. And stop reporting on contact count like it's a win.</p>
+
+            <p>If you get the reporting layer right, you stop being the agency that "manages the tech" and start being the agency that drives measurable results. That's the retainer that renews itself.</p>
+
+        </div>
+
+        <div class="post-cta">
+            <h2>Want Reporting That Actually Tells a Story?</h2>
+            <p>If you're an agency implementing GHL and you want dashboards that show clients what actually matters — or you're building out reporting from scratch and want to get it right — I'd love to help.</p>
+            <a href="https://hellodarkhorse.com/index.html#contact" class="btn-coral">Tell Me About Your Project →</a>
+        </div>
+
+    </article>
+
+    <footer>
+        <div>
+            <div class="footer-logo">DARK <em>HORSE</em></div>
+            <div class="footer-tagline">GoHighLevel implementation partner for agencies.</div>
+            <div class="footer-tagline">Arnold, MO 63010</div>
+            <div class="footer-tagline" style="margin-top:6px;">Mon&ndash;Thu: 10am&ndash;6:30pm &nbsp;&middot;&nbsp; Fri: 10am&ndash;4:30pm &nbsp;&middot;&nbsp; Sat: 11am&ndash;2:30pm</div>
+            <div class="footer-copy" style="margin-top:8px;">© 2026 Dark Horse. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="https://app.hellodarkhorse.com" target="_blank" rel="noopener">CRM Login</a>
+        </div>
+        <div class="footer-social-icons">
+            <a href="https://www.linkedin.com/company/hello-dark-horse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/darkhco/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:krys@hellodarkhorse.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>
